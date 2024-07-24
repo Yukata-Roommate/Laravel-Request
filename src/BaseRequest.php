@@ -765,14 +765,14 @@ abstract class BaseRequest extends FormRequest
      */
     protected function maskParameters(array $parameters): array
     {
-        $maskedParameters = $this->configMaskedParameters();
+        $maskedParameters = $this->configMaskingParameters();
 
         if (empty($maskedParameters)) return $parameters;
 
         foreach ($maskedParameters as $key) {
             if (!isset($parameters[$key])) continue;
 
-            $parameters[$key] = $this->maskString();
+            $parameters[$key] = $this->configMaskingText();
         }
 
         return $parameters;
@@ -875,9 +875,9 @@ abstract class BaseRequest extends FormRequest
      * 
      * @return string
      */
-    protected function configMaskString(): string
+    protected function configMaskingText(): string
     {
-        return $this->config("mask_string", "********");
+        return $this->config("masking_text", "********");
     }
 
     /**
@@ -885,9 +885,9 @@ abstract class BaseRequest extends FormRequest
      * 
      * @return array<string>
      */
-    protected function configMaskedParameters(): array
+    protected function configMaskingParameters(): array
     {
-        return $this->config("masked_parameters", []);
+        return $this->config("masking_parameters", []);
     }
 
     /**

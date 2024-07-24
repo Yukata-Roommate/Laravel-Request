@@ -16,7 +16,7 @@ return [
     "logging_directly"     => env("CUSTOM_REQUEST_LOGGING_DIRECTLY", "request"),
     "log_format"           => env("CUSTOM_REQUEST_LOG_FORMAT", "%message%"),
     "log_parameter_format" => env("CUSTOM_REQUEST_LOG_PARAMETER_FORMAT", ""),
-    "mask_string"          => env("CUSTOM_REQUEST_MASK_STRING", "********"),
-    "masked_parameters"    => [],
+    "masking_text"         => env("CUSTOM_REQUEST_MASKING_TEXT", "********"),
+    "masking_parameters"   => [],
     "add_parameters"       => [],
 ];
