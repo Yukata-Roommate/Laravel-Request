@@ -861,13 +861,13 @@ abstract class BaseRequest extends FormRequest
     }
 
     /**
-     * get config log parameter format
+     * get config add parameters
      * 
-     * @return string
+     * @return array<string>
      */
-    protected function configLogParameterFormat(): string
+    protected function configAddParameters(): array
     {
-        return $this->config("log_parameter_format", "");
+        return $this->config("add_parameters", []);
     }
 
     /**
@@ -888,15 +888,5 @@ abstract class BaseRequest extends FormRequest
     protected function configMaskingParameters(): array
     {
         return $this->config("masking_parameters", []);
-    }
-
-    /**
-     * get config add parameters
-     * 
-     * @return array<string>
-     */
-    protected function configAddParameters(): array
-    {
-        return $this->config("add_parameters", []);
     }
 }

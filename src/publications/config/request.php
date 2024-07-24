@@ -15,8 +15,18 @@ return [
     "logging_parameters"   => env("CUSTOM_REQUEST_LOGGING_PARAMETERS", false),
     "logging_directly"     => env("CUSTOM_REQUEST_LOGGING_DIRECTLY", "request"),
     "log_format"           => env("CUSTOM_REQUEST_LOG_FORMAT", "%message%"),
-    "log_parameter_format" => env("CUSTOM_REQUEST_LOG_PARAMETER_FORMAT", ""),
-    "masking_text"         => env("CUSTOM_REQUEST_MASKING_TEXT", "********"),
-    "masking_parameters"   => [],
     "add_parameters"       => [],
+
+    /*----------------------------------------*
+     * Masking
+     *----------------------------------------*/
+
+    "masking_text"       => env("CUSTOM_REQUEST_MASKING_TEXT", "********"),
+    "masking_parameters" => [
+        "password",
+        "password_confirmation",
+        "current_password",
+        "new_password",
+        "new_password_confirmation",
+    ],
 ];
