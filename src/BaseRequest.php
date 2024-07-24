@@ -871,7 +871,7 @@ abstract class BaseRequest extends FormRequest
     }
 
     /**
-     * get config mask string
+     * get config masking text
      * 
      * @return string
      */
@@ -881,7 +881,7 @@ abstract class BaseRequest extends FormRequest
     }
 
     /**
-     * get config masked parameters
+     * get config masking parameters
      * 
      * @return array<string>
      */
