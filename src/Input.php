@@ -272,7 +272,7 @@ class Input implements InputInterface
 
     /**
      * validate the parameter as an array
-     * if acceptKeys is specified, validate that the parameter has the specified keys
+     * if acceptKeys is specified, validate the parameter has the specified keys
      * 
      * @param array<string>|string|null $acceptKeys
      * @param string|null $message
@@ -286,7 +286,7 @@ class Input implements InputInterface
     }
 
     /**
-     * validate the parameter as an array and validate that the parameter has the specified keys
+     * validate the parameter as an array and validate the parameter has the specified keys
      * 
      * @param array<string>|string $keys
      * @param string|null $message
@@ -451,7 +451,7 @@ class Input implements InputInterface
 
     /**
      * validate the parameter is a valid time zone
-     * if an identifier is specified, validates the time zone is available in the identifier
+     * if an identifier is specified, validate the time zone is available in the identifier
      * 
      * @param string|null $identifier
      * @param string|null $message

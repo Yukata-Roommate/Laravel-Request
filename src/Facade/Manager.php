@@ -197,7 +197,7 @@ class Manager
      */
     protected function throwTooFewArgumentsException(): void
     {
-        throw new \BadMethodCallException("Too few arguments to function " . static::class . "::make(), 0 passed in. exactly 1 expected.");
+        throw new \BadMethodCallException("too few arguments to function " . static::class . "::make(), 0 passed in. exactly 1 expected.");
     }
 
     /**
@@ -208,6 +208,6 @@ class Manager
      */
     protected function throwBadMethodCallException(string $name): void
     {
-        throw new \BadMethodCallException("Method " . Input::class . "::{$name}() does not exist.");
+        throw new \BadMethodCallException("method " . Input::class . "::{$name}() does not exist.");
     }
 }

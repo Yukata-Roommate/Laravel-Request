@@ -29,8 +29,9 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * validate resolved
+     * 
      * @see \Illuminate\Validation\ValidatesWhenResolvedTrait
-     *
+     * 
      * @return void
      */
     #[\Override]
@@ -50,9 +51,10 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * check if the request is authorized
+     *
      * @see \Illuminate\Foundation\Http\FormRequest
      * @see \Illuminate\Validation\ValidatesWhenResolvedTrait
-     *
+     * 
      * @return bool
      */
     #[\Override]
@@ -63,6 +65,7 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * process when the request is not authorized
+     * 
      * @see \Illuminate\Foundation\Http\FormRequest
      * @see \Illuminate\Validation\ValidatesWhenResolvedTrait
      *
@@ -76,8 +79,9 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * prepare before validation
-     * @see \Illuminate\Validation\ValidatesWhenResolvedTrait
      *
+     * @see \Illuminate\Validation\ValidatesWhenResolvedTrait
+     * 
      * @return void
      */
     #[\Override]
@@ -87,8 +91,9 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * process when validation is passed
-     * @see \Illuminate\Validation\ValidatesWhenResolvedTrait
      *
+     * @see \Illuminate\Validation\ValidatesWhenResolvedTrait
+     * 
      * @return void
      */
     #[\Override]
@@ -98,8 +103,9 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * get validated data
-     * @see \Illuminate\Foundation\Http\FormRequest
      *
+     * @see \Illuminate\Foundation\Http\FormRequest
+     * 
      * @return array
      */
     #[\Override]
@@ -110,8 +116,9 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * process when validation is failed
-     * @see \Illuminate\Foundation\Http\FormRequest
      *
+     * @see \Illuminate\Foundation\Http\FormRequest
+     * 
      * @param  \Illuminate\Contracts\Validation\Validator $validator
      * @return void
      */
@@ -123,6 +130,7 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * get attributes for validation
+     * 
      * @see \Illuminate\Foundation\Http\FormRequest
      *
      * @return array<string, string>
@@ -136,6 +144,8 @@ abstract class BaseRequest extends FormRequest
     /**
      * get messages for validation
      *
+     * @see \Illuminate\Foundation\Http\FormRequest
+     * 
      * @return array<string, string>
      */
     #[\Override]
@@ -499,7 +509,7 @@ abstract class BaseRequest extends FormRequest
     /**
      * is request authorized
      * 
-     * @var bool $isAuthorized
+     * @var bool
      */
     protected bool $isAuthorized = true;
 
@@ -520,14 +530,14 @@ abstract class BaseRequest extends FormRequest
     /**
      * unauthorized message
      * 
-     * @var string $unauthorizedMessage
+     * @var string
      */
     protected string $unauthorizedMessage = "";
 
     /**
      * unauthorized message key
      * 
-     * @var string $unauthorizedMessageKey
+     * @var string
      */
     protected string $unauthorizedMessageKey = "";
 
@@ -596,21 +606,21 @@ abstract class BaseRequest extends FormRequest
      *----------------------------------------*/
 
     /**
-     * input array
+     * Input array
      * 
      * @var array<\YukataRm\Laravel\Request\Interface\InputInterface>
      */
     protected array $inputs = [];
 
     /**
-     * get input array
+     * get Input array
      * 
      * @return array<\YukataRm\Laravel\Request\Interface\InputInterface>
      */
     abstract protected function inputs(): array;
 
     /**
-     * set input array
+     * set Input array
      * 
      * @return void
      */
@@ -686,7 +696,7 @@ abstract class BaseRequest extends FormRequest
     /**
      * is logging parameters
      * 
-     * @var bool $isLoggingParameters
+     * @var bool
      */
     protected bool $isLoggingParameters = false;
 
@@ -779,7 +789,7 @@ abstract class BaseRequest extends FormRequest
     }
 
     /**
-     * get logger
+     * get Logger instance
      * 
      * @return \YukataRm\Laravel\SimpleLogger\Interface\LoggerInterface
      */

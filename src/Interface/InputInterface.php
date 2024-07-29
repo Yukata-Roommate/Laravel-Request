@@ -121,7 +121,7 @@ interface InputInterface
 
     /**
      * validate the parameter as an array
-     * if acceptKeys is specified, validate that the parameter has the specified keys
+     * if acceptKeys is specified, validate the parameter has the specified keys
      * 
      * @param array<string>|string|null $acceptKeys
      * @param string|null $message
@@ -130,7 +130,7 @@ interface InputInterface
     public function array(array|string|null $acceptKeys = null, string $message = null): static;
 
     /**
-     * validate the parameter is an array and has the key specified in keys
+     * validate the parameter as an array and validate the parameter has the specified keys
      * 
      * @param array<string>|string $keys
      * @param string|null $message

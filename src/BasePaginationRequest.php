@@ -13,6 +13,10 @@ use YukataRm\Laravel\Request\Facade\Input;
  */
 abstract class BasePaginationRequest extends BaseRequest
 {
+    /*----------------------------------------*
+     * Override
+     *----------------------------------------*/
+
     /**
      * set input array
      * 
@@ -26,34 +30,35 @@ abstract class BasePaginationRequest extends BaseRequest
         ]);
     }
 
-    /**
-     * default page number
-     * 
-     * @return int
-     */
-    protected function defaultPage(): int
-    {
-        return 1;
-    }
+    /*----------------------------------------*
+     * Pagination
+     *----------------------------------------*/
 
     /**
-     * default page item limit
+     * page item limit
+     *
+     * @var int
+     */
+    protected int $pageItemLimit = 10;
+
+    /**
+     * get page item limit
      * 
      * @return int
      */
     protected function pageItemLimit(): int
     {
-        return 10;
+        return $this->pageItemLimit;
     }
 
     /**
-     * get page number
+     * get page
      * 
      * @return int
      */
     public function page(): int
     {
-        return $this->bindInt("page", $this->defaultPage());
+        return $this->bindInt("page", 1);
     }
 
     /**

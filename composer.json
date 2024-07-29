@@ -3,7 +3,7 @@
     "description": "Extend Form Request for Laravel",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "autoload": {
         "psr-4": {
             "YukataRm\\Laravel\\Request\\": "src"
@@ -12,7 +12,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "YukataRm\\Laravel\\Request\\Provider\\ServiceProvider"
+                "YukataRm\\Laravel\\Request\\Provider\\FacadeServiceProvider",
+                "YukataRm\\Laravel\\Request\\Provider\\PublicationServiceProvider"
             ],
             "aliases": {
                 "Input": "YukataRm\\Laravel\\Request\\Facade\\Input"
