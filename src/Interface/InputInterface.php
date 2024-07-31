@@ -39,9 +39,9 @@ interface InputInterface
     /**
      * get attribute name
      * 
-     * @return ?string
+     * @return string|null
      */
-    public function getAttributeName(): ?string;
+    public function getAttributeName(): string|null;
 
     /**
      * set validation rules

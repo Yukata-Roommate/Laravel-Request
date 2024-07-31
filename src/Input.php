@@ -56,9 +56,9 @@ class Input implements InputInterface
     /**
      * attribute name
      * 
-     * @var ?string
+     * @var string|null
      */
-    protected ?string $attributeName = null;
+    protected string|null $attributeName = null;
 
     /**
      * validation rules
@@ -90,9 +90,9 @@ class Input implements InputInterface
     /**
      * get attribute name
      * 
-     * @return ?string
+     * @return string|null
      */
-    public function getAttributeName(): ?string
+    public function getAttributeName(): string|null
     {
         return __($this->attributeName);
     }

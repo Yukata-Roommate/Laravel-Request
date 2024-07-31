@@ -337,7 +337,7 @@ abstract class BaseRequest extends FormRequest
      * @param string $key
      * @return string|null
      */
-    protected function bindNullableString(string $key): ?string
+    protected function bindNullableString(string $key): string|null
     {
         $bind = $this->bind($key);
 
@@ -363,7 +363,7 @@ abstract class BaseRequest extends FormRequest
      * @param string $key
      * @return int|null
      */
-    protected function bindNullableInt(string $key): ?int
+    protected function bindNullableInt(string $key): int|null
     {
         $bind = $this->bind($key);
 
@@ -389,7 +389,7 @@ abstract class BaseRequest extends FormRequest
      * @param string $key
      * @return float|null
      */
-    protected function bindNullableFloat(string $key): ?float
+    protected function bindNullableFloat(string $key): float|null
     {
         $bind = $this->bind($key);
 
@@ -415,7 +415,7 @@ abstract class BaseRequest extends FormRequest
      * @param string $key
      * @return bool|null
      */
-    protected function bindNullableBool(string $key): ?bool
+    protected function bindNullableBool(string $key): bool|null
     {
         $bind = $this->bind($key);
 
@@ -441,7 +441,7 @@ abstract class BaseRequest extends FormRequest
      * @param string $key
      * @return array|null
      */
-    protected function bindNullableArray(string $key): ?array
+    protected function bindNullableArray(string $key): array|null
     {
         $bind = $this->bind($key);
 
@@ -481,7 +481,7 @@ abstract class BaseRequest extends FormRequest
      * @param string $enumClass
      * @return UnitEnum|null
      */
-    protected function bindNullableEnum(string $key, string $enumClass): ?UnitEnum
+    protected function bindNullableEnum(string $key, string $enumClass): UnitEnum|null
     {
         $bind = $this->bind($key);
 
@@ -553,8 +553,10 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * get unauthorized message
+     * 
+     * @return string|null
      */
-    protected function getUnauthorizedMessage(): ?string
+    protected function getUnauthorizedMessage(): string|null
     {
         $unauthorizedMessageKey = $this->unauthorizedMessageKey();
 
