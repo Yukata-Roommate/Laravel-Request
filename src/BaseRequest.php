@@ -514,7 +514,7 @@ abstract class BaseRequest extends FormRequest
     protected bool $isAuthorized = true;
 
     /**
-     * check if the request is authorized
+     * check if request is authorized
      * 
      * @return bool
      */

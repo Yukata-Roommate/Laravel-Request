@@ -120,8 +120,8 @@ interface InputInterface
      *----------------------------------------*/
 
     /**
-     * validate the parameter as an array
-     * if acceptKeys is specified, validate the parameter has the specified keys
+     * validate parameter as an array
+     * if acceptKeys is specified, validate parameter has specified keys
      * 
      * @param array<string>|string|null $acceptKeys
      * @param string|null $message
@@ -130,7 +130,7 @@ interface InputInterface
     public function array(array|string|null $acceptKeys = null, string $message = null): static;
 
     /**
-     * validate the parameter as an array and validate the parameter has the specified keys
+     * validate parameter as an array and validate parameter has specified keys
      * 
      * @param array<string>|string $keys
      * @param string|null $message
@@ -139,7 +139,7 @@ interface InputInterface
     public function requiredArrayKeys(array|string $keys, string $message = null): static;
 
     /**
-     * validate the parameter is one of the values field has
+     * validate parameter is one of values field has
      * 
      * @param string $field
      * @param string $key
@@ -149,7 +149,7 @@ interface InputInterface
     public function inArray(string $field, string $key, string $message = null): static;
 
     /**
-     * validate the parameter is an array and has no duplicate values
+     * validate parameter is an array and has no duplicate values
      * 
      * @param string|null $message
      * @return static
@@ -157,7 +157,7 @@ interface InputInterface
     public function distinct(string $message = null): static;
 
     /**
-     * validate strict the parameter is an array and has no duplicate values
+     * validate strict parameter is an array and has no duplicate values
      * 
      * @param string|null $message
      * @return static
@@ -165,7 +165,7 @@ interface InputInterface
     public function distinctStrict(string $message = null): static;
 
     /**
-     * validate case-insensitive the parameter is an array and has no duplicate values
+     * validate case-insensitive parameter is an array and has no duplicate values
      * 
      * @param string|null $message
      * @return static
@@ -177,7 +177,7 @@ interface InputInterface
      *----------------------------------------*/
 
     /**
-     * validate the parameter as a boolean value
+     * validate parameter as a boolean value
      * 
      * @param string|null $message
      * @return static
@@ -189,7 +189,7 @@ interface InputInterface
      *----------------------------------------*/
 
     /**
-     * validate the parameter as a date value
+     * validate parameter as a date value
      * 
      * @param string|null $message
      * @return static
@@ -197,7 +197,7 @@ interface InputInterface
     public function date(string $message = null): static;
 
     /**
-     * validate the parameter as a date value and format it with the specified format
+     * validate parameter as a date value and format it with specified format
      * 
      * @param string $format
      * @param string|null $message
@@ -206,7 +206,7 @@ interface InputInterface
     public function dateFormat(string $format, string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is equal to date
+     * validate parameter is a value can be treated as a date and is equal to date
      * 
      * @param string $date
      * @param string|null $message
@@ -215,8 +215,8 @@ interface InputInterface
     public function dateEqual(string $date, string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is later than date
-     * date is either the date to be compared or a parameter name
+     * validate parameter is a value can be treated as a date and is later than date
+     * date is either date to be compared or a parameter name
      * 
      * @param string $date
      * @param string|null $message
@@ -225,8 +225,8 @@ interface InputInterface
     public function after(string $date, string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is later than or equal to date
-     * date is either the date to be compared or a parameter name
+     * validate parameter is a value can be treated as a date and is later than or equal to date
+     * date is either date to be compared or a parameter name
      * 
      * @param string $date
      * @param string|null $message
@@ -235,8 +235,8 @@ interface InputInterface
     public function afterOrEqual(string $date, string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is earlier than date
-     * date is either the date to be compared or a parameter name
+     * validate parameter is a value can be treated as a date and is earlier than date
+     * date is either date to be compared or a parameter name
      * 
      * @param string $date
      * @param string|null $message
@@ -245,8 +245,8 @@ interface InputInterface
     public function before(string $date, string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is earlier than or equal to date
-     * date is either the date to be compared or a parameter name
+     * validate parameter is a value can be treated as a date and is earlier than or equal to date
+     * date is either date to be compared or a parameter name
      * 
      * @param string $date
      * @param string|null $message
@@ -255,8 +255,8 @@ interface InputInterface
     public function beforeOrEqual(string $date, string $message = null): static;
 
     /**
-     * validate the parameter is a valid time zone
-     * if an identifier is specified, validates the time zone is available in the identifier
+     * validate parameter is a valid time zone
+     * if an identifier is specified, validates time zone is available in identifier
      * 
      * @param string|null $identifier
      * @param string|null $message
@@ -265,7 +265,7 @@ interface InputInterface
     public function timezone(string $identifier = null, string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and follows the Y-m-d format
+     * validate parameter is a value can be treated as a date and follows Y-m-d format
      * 
      * @param string|null $message
      * @return static
@@ -273,7 +273,7 @@ interface InputInterface
     public function asDate(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and follows the H:i:s format
+     * validate parameter is a value can be treated as a date and follows H:i:s format
      * 
      * @param string|null $message
      * @return static
@@ -281,7 +281,7 @@ interface InputInterface
     public function asTime(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and follows the Y-m-d H:i:s format
+     * validate parameter is a value can be treated as a date and follows Y-m-d H:i:s format
      * 
      * @param string|null $message
      * @return static
@@ -289,7 +289,7 @@ interface InputInterface
     public function asDateTime(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and follows the Y-m format
+     * validate parameter is a value can be treated as a date and follows Y-m format
      * 
      * @param string|null $message
      * @return static
@@ -297,7 +297,7 @@ interface InputInterface
     public function asYearMonth(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and follows the m-d format
+     * validate parameter is a value can be treated as a date and follows m-d format
      * 
      * @param string|null $message
      * @return static
@@ -305,7 +305,7 @@ interface InputInterface
     public function asMonthDay(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and follows the H:i format
+     * validate parameter is a value can be treated as a date and follows H:i format
      * 
      * @param string|null $message
      * @return static
@@ -313,7 +313,7 @@ interface InputInterface
     public function asHourMinute(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and follows the i:s format
+     * validate parameter is a value can be treated as a date and follows i:s format
      * 
      * @param string|null $message
      * @return static
@@ -321,7 +321,7 @@ interface InputInterface
     public function asMinuteSecond(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid year
+     * validate parameter is a value can be treated as a date and is a valid year
      * 
      * @param string|null $message
      * @return static
@@ -329,7 +329,7 @@ interface InputInterface
     public function asYear(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid month
+     * validate parameter is a value can be treated as a date and is a valid month
      * 
      * @param string|null $message
      * @return static
@@ -337,7 +337,7 @@ interface InputInterface
     public function asMonth(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid 0-padded month
+     * validate parameter is a value can be treated as a date and is a valid 0-padded month
      * 
      * @param string|null $message
      * @return static
@@ -345,7 +345,7 @@ interface InputInterface
     public function asMonthZero(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid month name
+     * validate parameter is a value can be treated as a date and is a valid month name
      * 
      * @param string|null $message
      * @return static
@@ -353,7 +353,7 @@ interface InputInterface
     public function asMonthName(array|string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid short month name
+     * validate parameter is a value can be treated as a date and is a valid short month name
      * 
      * @param string|null $message
      * @return static
@@ -361,7 +361,7 @@ interface InputInterface
     public function asMonthNameShort(array|string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid day
+     * validate parameter is a value can be treated as a date and is a valid day
      * 
      * @param string|null $message
      * @return static
@@ -369,7 +369,7 @@ interface InputInterface
     public function asDay(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid 0-padded day
+     * validate parameter is a value can be treated as a date and is a valid 0-padded day
      * 
      * @param string|null $message
      * @return static
@@ -377,7 +377,7 @@ interface InputInterface
     public function asDayZero(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid hour
+     * validate parameter is a value can be treated as a date and is a valid hour
      * 
      * @param string|null $message
      * @return static
@@ -385,7 +385,7 @@ interface InputInterface
     public function asHour(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid 0-padded hour
+     * validate parameter is a value can be treated as a date and is a valid 0-padded hour
      * 
      * @param string|null $message
      * @return static
@@ -393,7 +393,7 @@ interface InputInterface
     public function asHourZero(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid 12-hour notation hour
+     * validate parameter is a value can be treated as a date and is a valid 12-hour notation hour
      * 
      * @param string|null $message
      * @return static
@@ -401,7 +401,7 @@ interface InputInterface
     public function asHourTwelveNotation(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid 0-padded 12-hour notation hour
+     * validate parameter is a value can be treated as a date and is a valid 0-padded 12-hour notation hour
      * 
      * @param string|null $message
      * @return static
@@ -409,7 +409,7 @@ interface InputInterface
     public function asHourTwelveNotationZero(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid minute
+     * validate parameter is a value can be treated as a date and is a valid minute
      * 
      * @param string|null $message
      * @return static
@@ -417,7 +417,7 @@ interface InputInterface
     public function asMinute(string $message = null): static;
 
     /**
-     * validate the parameter is a value can be treated as a date and is a valid second
+     * validate parameter is a value can be treated as a date and is a valid second
      * 
      * @param string|null $message
      * @return static
@@ -429,7 +429,7 @@ interface InputInterface
      *----------------------------------------*/
 
     /**
-     * validate the parameter matches the value of field
+     * validate parameter matches value of field
      * 
      * @param string $field
      * @param string|null $message
@@ -438,7 +438,7 @@ interface InputInterface
     public function same(string $field, string $message = null): static;
 
     /**
-     * validate the parameter does not match the value of field
+     * validate parameter does not match value of field
      * 
      * @param string $field
      * @param string|null $message
@@ -447,7 +447,7 @@ interface InputInterface
     public function different(string $field, string $message = null): static;
 
     /**
-     * validate the parameter is greater than the value of field
+     * validate parameter is greater than value of field
      * 
      * @param string $field
      * @param string|null $message
@@ -456,7 +456,7 @@ interface InputInterface
     public function gt(string $field, string $message = null): static;
 
     /**
-     * validate the parameter is greater than or equal to the value of field
+     * validate parameter is greater than or equal to value of field
      * 
      * @param string $field
      * @param string|null $message
@@ -465,7 +465,7 @@ interface InputInterface
     public function gte(string $field, string $message = null): static;
 
     /**
-     * validate the parameter is less than the value of field
+     * validate parameter is less than value of field
      * 
      * @param string $field
      * @param string|null $message
@@ -474,7 +474,7 @@ interface InputInterface
     public function lt(string $field, string $message = null): static;
 
     /**
-     * validate the parameter is less than or equal to the value of field
+     * validate parameter is less than or equal to value of field
      * 
      * @param string $field
      * @param string|null $message
@@ -483,7 +483,7 @@ interface InputInterface
     public function lte(string $field, string $message = null): static;
 
     /**
-     * validate {field}_confirmation exists as a parameter and the parameter matches it
+     * validate {field}_confirmation exists as a parameter and parameter matches it
      * 
      * @param string|null $message
      * @return static
@@ -491,7 +491,7 @@ interface InputInterface
     public function confirmed(string $message = null): static;
 
     /**
-     * validate the parameter is 1, true, “on”, “yes”
+     * validate parameter is 1, true, “on”, “yes”
      * 
      * @param string|null $message
      * @return static
@@ -499,7 +499,7 @@ interface InputInterface
     public function accepted(string $message = null): static;
 
     /**
-     * validate the parameter is 1, true, “on”, “yes” if field is equal to value
+     * validate parameter is 1, true, “on”, “yes” if field is equal to value
      * 
      * @param string $field
      * @param mixed $value
@@ -509,7 +509,7 @@ interface InputInterface
     public function acceptedIf(string $field, mixed $value, string $message = null): static;
 
     /**
-     * validate the parameter is 0, false, “off”, “no”
+     * validate parameter is 0, false, “off”, “no”
      * 
      * @param string|null $message
      * @return static
@@ -517,7 +517,7 @@ interface InputInterface
     public function declined(string $message = null): static;
 
     /**
-     * validate the parameter is 0, false, “off”, “no” if field is equal to value
+     * validate parameter is 0, false, “off”, “no” if field is equal to value
      * 
      * @param string $field
      * @param mixed $value
@@ -531,7 +531,7 @@ interface InputInterface
      *----------------------------------------*/
 
     /**
-     * validate the parameter as a file
+     * validate parameter as a file
      * 
      * @param string|null $message
      * @return static
@@ -539,7 +539,7 @@ interface InputInterface
     public function file(string $message = null): static;
 
     /**
-     * validate the parameter as an image
+     * validate parameter as an image
      * 
      * @param string|null $message
      * @return static
@@ -547,7 +547,7 @@ interface InputInterface
     public function image(string $message = null): static;
 
     /**
-     * validate the parameter is a file, mime type corresponding to one of the extensions specified in the extensions
+     * validate parameter is a file, mime type corresponding to one of extensions specified in extensions
      * 
      * @param array<string>|string $extensions
      * @param string|null $message
@@ -556,7 +556,7 @@ interface InputInterface
     public function mimes(array|string $extensions, string $message = null): static;
 
     /**
-     * validate the parameter is a file, mime type corresponding to one of the mimetypes specified in the mimetypes
+     * validate parameter is a file, mime type corresponding to one of mimetypes specified in mimetypes
      * 
      * @param array<string>|string $mimetypes
      * @param string|null $message
@@ -565,7 +565,7 @@ interface InputInterface
     public function mimetypes(array|string $mimetypes, string $message = null): static;
 
     /**
-     * validate the parameter is a file and the extension is one of those specified in extensions
+     * validate parameter is a file and extension is one of those specified in extensions
      * 
      * @param array<string>|string $extensions
      * @param string|null $message
@@ -574,7 +574,7 @@ interface InputInterface
     public function extensions(array|string $extensions, string $message = null): static;
 
     /**
-     * validate the parameter is a file and matches the specified size
+     * validate parameter is a file and matches specified size
      * 
      * @param int|null $width
      * @param int|null $height
@@ -593,7 +593,7 @@ interface InputInterface
      *----------------------------------------*/
 
     /**
-     * validate the parameter is required
+     * validate parameter is required
      * 
      * @param string|null $message
      * @return static
@@ -601,7 +601,7 @@ interface InputInterface
     public function required(string $message = null): static;
 
     /**
-     * validate the parameter is required if field matches value
+     * validate parameter is required if field matches value
      * 
      * @param string $field
      * @param array<mixed> $values
@@ -611,7 +611,7 @@ interface InputInterface
     public function requiredIfField(string $field, array $values, string $message = null): static;
 
     /**
-     * validate the parameter is required if field matches 1, true, “on”, “yes”
+     * validate parameter is required if field matches 1, true, “on”, “yes”
      * 
      * @param array<string>|string $fields
      * @param string|null $message
@@ -620,7 +620,7 @@ interface InputInterface
     public function requiredIfAccepted(array|string $fields, string $message = null): static;
 
     /**
-     * validate the parameter is required if field does not match value
+     * validate parameter is required if field does not match value
      * 
      * @param string $field
      * @param array<mixed> $values
@@ -630,7 +630,7 @@ interface InputInterface
     public function requiredUnlessField(string $field, array $values, string $message = null): static;
 
     /**
-     * validate the parameter is required if some of the fields are present
+     * validate parameter is required if some of fields are present
      * 
      * @param array<string>|string $fields
      * @param string|null $message
@@ -639,7 +639,7 @@ interface InputInterface
     public function requiredWith(array|string $fields, string $message = null): static;
 
     /**
-     * validate the parameter is required if all of the fields are present
+     * validate parameter is required if all of fields are present
      * 
      * @param array<string>|string $fields
      * @param string|null $message
@@ -648,7 +648,7 @@ interface InputInterface
     public function requiredWithAll(array|string $fields, string $message = null): static;
 
     /**
-     * validate the parameter is required if some of the fields are not present
+     * validate parameter is required if some of fields are not present
      * 
      * @param array<string>|string $fields
      * @param string|null $message
@@ -657,7 +657,7 @@ interface InputInterface
     public function requiredWithout(array|string $fields, string $message = null): static;
 
     /**
-     * validate the parameter is required if all of the fields are not present
+     * validate parameter is required if all of fields are not present
      * 
      * @param array<string>|string $fields
      * @param string|null $message
@@ -666,7 +666,7 @@ interface InputInterface
     public function requiredWithoutAll(array|string $fields, string $message = null): static;
 
     /**
-     * validate the parameter is not present
+     * validate parameter is not present
      * 
      * @param string|null $message
      * @return static
@@ -674,7 +674,7 @@ interface InputInterface
     public function missing(string $message = null): static;
 
     /**
-     * validate the parameter is not present if field matches value
+     * validate parameter is not present if field matches value
      * 
      * @param string $field
      * @param array<mixed> $values
@@ -684,7 +684,7 @@ interface InputInterface
     public function missingIfField(string $field, array $values, string $message = null): static;
 
     /**
-     * validate the parameter is not present if field does not match value
+     * validate parameter is not present if field does not match value
      * 
      * @param string $field
      * @param array<mixed> $values
@@ -694,7 +694,7 @@ interface InputInterface
     public function missingUnlessField(string $field, array $values, string $message = null): static;
 
     /**
-     * validate the parameter is not present if some of the fields are present
+     * validate parameter is not present if some of fields are present
      * 
      * @param array<string>|string $fields
      * @param string|null $message
@@ -703,7 +703,7 @@ interface InputInterface
     public function missingWith(array|string $fields, string $message = null): static;
 
     /**
-     * validate the parameter is not present if all of the fields are present
+     * validate parameter is not present if all of fields are present
      * 
      * @param array<string>|string $fields
      * @param string|null $message
@@ -712,7 +712,7 @@ interface InputInterface
     public function missingWithAll(array|string $fields, string $message = null): static;
 
     /**
-     * validate the parameter is not present if some of the fields are not present
+     * validate parameter is not present if some of fields are not present
      * 
      * @param array<string>|string $fields
      * @param string|null $message
@@ -721,7 +721,7 @@ interface InputInterface
     public function missingWithout(array|string $fields, string $message = null): static;
 
     /**
-     * validate the parameter is not present if all of the fields are not present
+     * validate parameter is not present if all of fields are not present
      * 
      * @param array<string>|string $fields
      * @param string|null $message
@@ -730,7 +730,7 @@ interface InputInterface
     public function missingWithoutAll(array|string $fields, string $message = null): static;
 
     /**
-     * validate the parameter is not present, or is an empty
+     * validate parameter is not present, or is an empty
      * 
      * @param string|null $message
      * @return static
@@ -738,7 +738,7 @@ interface InputInterface
     public function prohibited(string $message = null): static;
 
     /**
-     * validate the parameter is not present, or is an empty if field matches value
+     * validate parameter is not present, or is an empty if field matches value
      * 
      * @param string $field
      * @param array<mixed> $values
@@ -748,7 +748,7 @@ interface InputInterface
     public function prohibitedIfField(string $field, array $values, string $message = null): static;
 
     /**
-     * validate the parameter is not present, or is an empty if field does not match value
+     * validate parameter is not present, or is an empty if field does not match value
      * 
      * @param string $field
      * @param array<mixed> $values
@@ -758,7 +758,7 @@ interface InputInterface
     public function prohibitedUnlessField(string $field, array $values, string $message = null): static;
 
     /**
-     * validate all fields in fields are absent or empty if the parameter is present and non-empty
+     * validate all fields in fields are absent or empty if parameter is present and non-empty
      * 
      * @param array<string>|string $fields
      * @param string|null $message
@@ -767,7 +767,7 @@ interface InputInterface
     public function prohibits(array|string $fields, string $message = null): static;
 
     /**
-     * validate the parameter is present
+     * validate parameter is present
      * 
      * @param string|null $message
      * @return static
@@ -775,7 +775,7 @@ interface InputInterface
     public function present(string $message = null): static;
 
     /**
-     * validate the parameter is not empty if the parameter is present
+     * validate parameter is not empty if parameter is present
      * 
      * @param string|null $message
      * @return static
@@ -783,7 +783,7 @@ interface InputInterface
     public function filled(string $message = null): static;
 
     /**
-     * nullable the parameter
+     * nullable parameter
      * 
      * @param string|null $message
      * @return static
@@ -791,7 +791,7 @@ interface InputInterface
     public function nullable(string $message = null): static;
 
     /**
-     * validate the parameter is required if isRequired is true
+     * validate parameter is required if isRequired is true
      * 
      * @param bool $isRequired
      * @param string|null $message
@@ -800,7 +800,7 @@ interface InputInterface
     public function requiredIf(bool $isRequired, string $message = null): static;
 
     /**
-     * validate the parameter is required if isRequired is false
+     * validate parameter is required if isRequired is false
      * 
      * @param bool $isRequired
      * @param string|null $message
@@ -809,7 +809,7 @@ interface InputInterface
     public function requiredUnless(bool $isRequired, string $message = null): static;
 
     /**
-     * validate the parameter is not present if isMissing is true
+     * validate parameter is not present if isMissing is true
      * 
      * @param bool $isMissing
      * @param string|null $message
@@ -818,7 +818,7 @@ interface InputInterface
     public function missingIf(bool $isMissing, string $message = null): static;
 
     /**
-     * validate the parameter is not present if isMissing is false
+     * validate parameter is not present if isMissing is false
      * 
      * @param bool $isMissing
      * @param string|null $message
@@ -827,7 +827,7 @@ interface InputInterface
     public function missingUnless(bool $isMissing, string $message = null): static;
 
     /**
-     * validate the parameter is not present, or is an empty if isProhibited is true
+     * validate parameter is not present, or is an empty if isProhibited is true
      * 
      * @param bool $isProhibited
      * @param string|null $message
@@ -836,7 +836,7 @@ interface InputInterface
     public function prohibitedIf(bool $isProhibited, string $message = null): static;
 
     /**
-     * validate the parameter is not present, or is an empty if isProhibited is false
+     * validate parameter is not present, or is an empty if isProhibited is false
      * 
      * @param bool $isProhibited
      * @param string|null $message
@@ -849,7 +849,7 @@ interface InputInterface
      *----------------------------------------*/
 
     /**
-     * validate the parameter is numeric
+     * validate parameter is numeric
      * 
      * @param string|null $message
      * @return static
@@ -857,7 +857,7 @@ interface InputInterface
     public function numeric(string $message = null): static;
 
     /**
-     * validate the parameter is an integer
+     * validate parameter is an integer
      * 
      * @param string|null $message
      * @return static
@@ -865,7 +865,7 @@ interface InputInterface
     public function integer(string $message = null): static;
 
     /**
-     * validate the parameter is a number multiple of num
+     * validate parameter is a number multiple of num
      * 
      * @param int $num
      * @param string|null $message
@@ -874,8 +874,8 @@ interface InputInterface
     public function multipleOf(int $num, string $message = null): static;
 
     /**
-     * validate the parameter has a number of decimal places greater than or equal to min and less than or equal to max
-     * if max is omitted, the number of decimal places must be equal to min
+     * validate parameter has a number of decimal places greater than or equal to min and less than or equal to max
+     * if max is omitted, number of decimal places must be equal to min
      * 
      * @param int $min
      * @param int|null $max
@@ -885,8 +885,8 @@ interface InputInterface
     public function decimal(int $min, int $max = null, string $message = null): static;
 
     /**
-     * validate the parameter has a number of digits greater than min and less than max
-     * if max is omitted, the number of digits must be equal to min
+     * validate parameter has a number of digits greater than min and less than max
+     * if max is omitted, number of digits must be equal to min
      * 
      * @param int $min
      * @param int|null $max
@@ -896,7 +896,7 @@ interface InputInterface
     public function digits(int $min, int $max = null, string $message = null): static;
 
     /**
-     * validate the number of digits in the parameter is less than or equal to max
+     * validate number of digits in parameter is less than or equal to max
      * 
      * @param int $max
      * @param string|null $message
@@ -905,7 +905,7 @@ interface InputInterface
     public function maxDigits(int $max, string $message = null): static;
 
     /**
-     * validate the number of digits in the parameter is greater than or equal to min
+     * validate number of digits in parameter is greater than or equal to min
      * 
      * @param int $min
      * @param string|null $message
@@ -918,7 +918,7 @@ interface InputInterface
      *----------------------------------------*/
 
     /**
-     * validate the parameter matches the regular expression pattern
+     * validate parameter matches regular expression pattern
      * 
      * @param string $pattern
      * @param string|null $message
@@ -927,7 +927,7 @@ interface InputInterface
     public function regex(string $pattern, string $message = null): static;
 
     /**
-     * validate the parameter does not match the regular expression pattern
+     * validate parameter does not match regular expression pattern
      * 
      * @param string $pattern
      * @param string|null $message
@@ -936,7 +936,7 @@ interface InputInterface
     public function notRegex(string $pattern, string $message = null): static;
 
     /**
-     * validate the parameter matches the pattern of a valid telephone number
+     * validate parameter matches pattern of a valid telephone number
      * 
      * @param string|null $message
      * @return static
@@ -944,7 +944,7 @@ interface InputInterface
     public function tel(string $message = null): static;
 
     /**
-     * validate the parameter matches the pattern of a valid post code
+     * validate parameter matches pattern of a valid post code
      * 
      * @param string|null $message
      * @return static
@@ -956,7 +956,7 @@ interface InputInterface
      *----------------------------------------*/
 
     /**
-     * validate the parameter has a size of value
+     * validate parameter has a size of value
      * 
      * @param int $size
      * @param string|null $message
@@ -965,7 +965,7 @@ interface InputInterface
     public function size(int $size, string $message = null): static;
 
     /**
-     * validate the parameter is less than or equal to max
+     * validate parameter is less than or equal to max
      * 
      * @param int $max
      * @param string|null $message
@@ -974,7 +974,7 @@ interface InputInterface
     public function max(int $max, string $message = null): static;
 
     /**
-     * validate the parameter is greater than or equal to min
+     * validate parameter is greater than or equal to min
      * 
      * @param int $min
      * @param string|null $message
@@ -983,7 +983,7 @@ interface InputInterface
     public function min(int $min, string $message = null): static;
 
     /**
-     * validate the parameter is between min and max
+     * validate parameter is between min and max
      * 
      * @param int $min
      * @param int $max
@@ -997,7 +997,7 @@ interface InputInterface
      *----------------------------------------*/
 
     /**
-     * validate the parameter is a string
+     * validate parameter is a string
      * 
      * @param string|null $message
      * @return static
@@ -1005,7 +1005,7 @@ interface InputInterface
     public function string(string $message = null): static;
 
     /**
-     * validate the parameter is a JSON string
+     * validate parameter is a JSON string
      * 
      * @param string|null $message
      * @return static
@@ -1013,7 +1013,7 @@ interface InputInterface
     public function json(string $message = null): static;
 
     /**
-     * validate the parameter matches the password of the authenticated user
+     * validate parameter matches password of authenticated user
      * 
      * @param string $guard
      * @param string|null $message
@@ -1022,7 +1022,7 @@ interface InputInterface
     public function currentPassword(string $guard = "web", string $message = null): static;
 
     /**
-     * validate the parameter is an email address
+     * validate parameter is an email address
      * 
      * @param string|null $message
      * @return static
@@ -1030,7 +1030,7 @@ interface InputInterface
     public function email(string $message = null): static;
 
     /**
-     * validate the parameter is a URL
+     * validate parameter is a URL
      * 
      * @param string|null $message
      * @return static
@@ -1038,7 +1038,7 @@ interface InputInterface
     public function url(string $message = null): static;
 
     /**
-     * validate the parameter is a valid URL
+     * validate parameter is a valid URL
      * 
      * @param string|null $message
      * @return static
@@ -1062,7 +1062,7 @@ interface InputInterface
     public function lowercase(string $message = null): static;
 
     /**
-     * validate the parameter is a valid IP address
+     * validate parameter is a valid IP address
      * 
      * @param string|null $message
      * @return static
@@ -1070,7 +1070,7 @@ interface InputInterface
     public function ip(string $message = null): static;
 
     /**
-     * validate the parameter is an IPv4 address
+     * validate parameter is an IPv4 address
      * 
      * @param string|null $message
      * @return static
@@ -1078,7 +1078,7 @@ interface InputInterface
     public function ipv4(string $message = null): static;
 
     /**
-     * validate the parameter is an IPv6 address
+     * validate parameter is an IPv6 address
      * 
      * @param string|null $message
      * @return static
@@ -1086,7 +1086,7 @@ interface InputInterface
     public function ipv6(string $message = null): static;
 
     /**
-     * validate the parameter is a valid MAC address
+     * validate parameter is a valid MAC address
      * 
      * @param string|null $message
      * @return static
@@ -1094,7 +1094,7 @@ interface InputInterface
     public function macAddress(string $message = null): static;
 
     /**
-     * validate the parameter is a UUID
+     * validate parameter is a UUID
      * 
      * @param string|null $message
      * @return static
@@ -1102,7 +1102,7 @@ interface InputInterface
     public function uuid(string $message = null): static;
 
     /**
-     * validate the parameter is a ULID
+     * validate parameter is a ULID
      * 
      * @param string|null $message
      * @return static
@@ -1110,7 +1110,7 @@ interface InputInterface
     public function ulid(string $message = null): static;
 
     /**
-     * validate the parameter consist of ASCII characters
+     * validate parameter consist of ASCII characters
      * 
      * @param string|null $message
      * @return static
@@ -1118,8 +1118,8 @@ interface InputInterface
     public function ascii(string $message = null): static;
 
     /**
-     * validate the parameters consist of Unicode alphabetic characters
-     * if isAscii is true, validate the parameters consist of ASCII characters
+     * validate parameters consist of Unicode alphabetic characters
+     * if isAscii is true, validate parameters consist of ASCII characters
      * 
      * @param bool $isAscii
      * @param string|null $message
@@ -1128,8 +1128,8 @@ interface InputInterface
     public function alpha(bool $isAscii = false, string $message = null): static;
 
     /**
-     * validate the parameters consist of Unicode alphabetic characters and numbers
-     * if isAscii is true, validate the parameters consist of ASCII characters and numbers
+     * validate parameters consist of Unicode alphabetic characters and numbers
+     * if isAscii is true, validate parameters consist of ASCII characters and numbers
      * 
      * @param bool $isAscii
      * @param string|null $message
@@ -1138,8 +1138,8 @@ interface InputInterface
     public function alphaNum(bool $isAscii = false, string $message = null): static;
 
     /**
-     * validate the parameters consist of Unicode alphabetic characters, numbers, underscores and hyphens
-     * if isAscii is true, validate the parameters consist of ASCII characters, numbers, underscores and hyphens
+     * validate parameters consist of Unicode alphabetic characters, numbers, underscores and hyphens
+     * if isAscii is true, validate parameters consist of ASCII characters, numbers, underscores and hyphens
      * 
      * @param bool $isAscii
      * @param string|null $message
@@ -1148,7 +1148,7 @@ interface InputInterface
     public function alphaDash(bool $isAscii = false, string $message = null): static;
 
     /**
-     * validate the parameter is a valid color code in hexadecimal format
+     * validate parameter is a valid color code in hexadecimal format
      * 
      * @param string|null $message
      * @return static
@@ -1160,7 +1160,7 @@ interface InputInterface
      *----------------------------------------*/
 
     /**
-     * validate the parameter is present in the column of the table
+     * validate parameter is present in column of table
      * if column is not specified, keyName is used instead
      * 
      * @param string $table
@@ -1171,7 +1171,7 @@ interface InputInterface
     public function exists(string $table, string $column = null, string $message = null): static;
 
     /**
-     * validate the parameter is present in the column of the table and is not deleted
+     * validate parameter is present in column of table and is not deleted
      * if column is not specified, keyName is used instead
      * 
      * @param string $table
@@ -1183,7 +1183,7 @@ interface InputInterface
     public function existsNotDeleted(string $table, string $column = null, string $deletedAtColumn = "deleted_at", string $message = null): static;
 
     /**
-     * validate the parameter is not present in the column of the table
+     * validate parameter is not present in column of table
      * if column is not specified, keyName is used instead
      * 
      * @param string $table
@@ -1194,7 +1194,7 @@ interface InputInterface
     public function unique(string $table, string $column = null, string $message = null): static;
 
     /**
-     * validate the parameter is not present in the column of the table in which the deleted_at column is null
+     * validate parameter is not present in column of table in which deleted_at column is null
      * if column is not specified, keyName is used instead
      * 
      * @param string $table
@@ -1206,7 +1206,7 @@ interface InputInterface
     public function uniqueNotDeleted(string $table, string $column = null, string $deletedAtColumn = "deleted_at", string $message = null): static;
 
     /**
-     * validate the parameter is present in the id column of the table
+     * validate parameter is present in id column of table
      * 
      * @param string $table
      * @param string|null $message
@@ -1219,7 +1219,7 @@ interface InputInterface
      *----------------------------------------*/
 
     /**
-     * validate the parameter is in values
+     * validate parameter is in values
      * 
      * @param \Illuminate\Contracts\Support\Arrayable|array<mixed>|string $values
      * @param string|null $message
@@ -1228,7 +1228,7 @@ interface InputInterface
     public function in(Arrayable|array|string $values, string $message = null): static;
 
     /**
-     * validate the parameter is not in values
+     * validate parameter is not in values
      * 
      * @param \Illuminate\Contracts\Support\Arrayable|array<mixed>|string $values
      * @param string|null $message
@@ -1237,7 +1237,7 @@ interface InputInterface
     public function notIn(Arrayable|array|string $values, string $message = null): static;
 
     /**
-     * validate the parameter starts with one of the values
+     * validate parameter starts with one of values
      * 
      * @param array<mixed>|string $values
      * @param string|null $message
@@ -1246,7 +1246,7 @@ interface InputInterface
     public function startsWith(array|string $values, string $message = null): static;
 
     /**
-     * validate the parameter doesn't start with any of the values
+     * validate parameter doesn't start with any of values
      * 
      * @param array<mixed>|string $values
      * @param string|null $message
@@ -1255,7 +1255,7 @@ interface InputInterface
     public function doesntStartWith(array|string $values, string $message = null): static;
 
     /**
-     * validate the parameter ends with one of the values
+     * validate parameter ends with one of values
      * 
      * @param array<mixed>|string $values
      * @param string|null $message
@@ -1264,7 +1264,7 @@ interface InputInterface
     public function endsWith(array|string $values, string $message = null): static;
 
     /**
-     * validate the parameter doesn't end with any of the values
+     * validate parameter doesn't end with any of values
      * 
      * @param array<mixed>|string $values
      * @param string|null $message
