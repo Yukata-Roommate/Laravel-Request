@@ -6,8 +6,9 @@ use Illuminate\Foundation\Http\FormRequest;
 
 use YukataRm\Laravel\Request\Enum\AddParameterEnum;
 
-use YukataRm\Laravel\SimpleLogger\Facade\Logger as LoggerFacade;
-use YukataRm\Laravel\SimpleLogger\Interface\LoggerInterface;
+use YukataRm\Laravel\Logger\Interface\LoggerInterface;
+use YukataRm\Laravel\Logger\Facade\Logger as LoggerFacade;
+use YukataRm\Logger\Enum\LogFormatEnum;
 
 use UnitEnum;
 
@@ -793,7 +794,7 @@ abstract class BaseRequest extends FormRequest
     /**
      * get Logger instance
      * 
-     * @return \YukataRm\Laravel\SimpleLogger\Interface\LoggerInterface
+     * @return \YukataRm\Laravel\Logger\Interface\LoggerInterface
      */
     protected function getLogger(): LoggerInterface
     {
@@ -801,7 +802,7 @@ abstract class BaseRequest extends FormRequest
 
         $logger->setDirectory($this->configLoggingDirectly());
 
-        if (!empty($this->configLogFormat())) $logger->setFormat($this->configLogFormat());
+        $logger->setLogFormat(LogFormatEnum::MESSAGE);
 
         return $logger;
     }
@@ -860,16 +861,6 @@ abstract class BaseRequest extends FormRequest
     protected function configLoggingDirectly(): string
     {
         return $this->config("logging_directly", "request");
-    }
-
-    /**
-     * get config log format
-     * 
-     * @return string
-     */
-    protected function configLogFormat(): string
-    {
-        return $this->config("log_format", "%message%");
     }
 
     /**
