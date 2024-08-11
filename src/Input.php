@@ -1799,7 +1799,7 @@ class Input implements InputInterface
     }
 
     /**
-     * validate parameter doesn't start with any of values
+     * validate parameter does not start with any of values
      * 
      * @param array<mixed>|string $values
      * @param string|null $message
@@ -1823,7 +1823,7 @@ class Input implements InputInterface
     }
 
     /**
-     * validate parameter doesn't end with any of values
+     * validate parameter does not end with any of values
      * 
      * @param array<mixed>|string $values
      * @param string|null $message

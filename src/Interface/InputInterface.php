@@ -1246,7 +1246,7 @@ interface InputInterface
     public function startsWith(array|string $values, string $message = null): static;
 
     /**
-     * validate parameter doesn't start with any of values
+     * validate parameter does not start with any of values
      * 
      * @param array<mixed>|string $values
      * @param string|null $message
@@ -1264,7 +1264,7 @@ interface InputInterface
     public function endsWith(array|string $values, string $message = null): static;
 
     /**
-     * validate parameter doesn't end with any of values
+     * validate parameter does not end with any of values
      * 
      * @param array<mixed>|string $values
      * @param string|null $message
