@@ -992,6 +992,14 @@ interface InputInterface
      */
     public function between(int $min, int $max, string $message = null): static;
 
+    /**
+     * validate parameter is flag integer
+     * 
+     * @param string|null $message
+     * @return static
+     */
+    public function flag(string $message = null): static;
+
     /*----------------------------------------*
      * Rule String
      *----------------------------------------*/

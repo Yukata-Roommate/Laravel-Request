@@ -1450,6 +1450,17 @@ class Input implements InputInterface
         return $this->addRuleValuesAndMessage("between", [$min, $max], $message);
     }
 
+    /**
+     * validate parameter is flag integer
+     * 
+     * @param string|null $message
+     * @return static
+     */
+    public function flag(string $message = null): static
+    {
+        return $this->between(0, 1, $message);
+    }
+
     /*----------------------------------------*
      * Rule String
      *----------------------------------------*/
