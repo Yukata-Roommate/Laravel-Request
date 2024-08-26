@@ -58,7 +58,7 @@ abstract class BasePaginationRequest extends BaseRequest
      */
     public function page(): int
     {
-        return $this->bindInt("page", 1);
+        return $this->bindNullableInt("page") ?? 1;
     }
 
     /**

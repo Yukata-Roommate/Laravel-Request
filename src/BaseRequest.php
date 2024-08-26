@@ -86,9 +86,7 @@ abstract class BaseRequest extends FormRequest
      * @return void
      */
     #[\Override]
-    protected function prepareForValidation(): void
-    {
-    }
+    protected function prepareForValidation(): void {}
 
     /**
      * process when validation is passed
@@ -98,9 +96,7 @@ abstract class BaseRequest extends FormRequest
      * @return void
      */
     #[\Override]
-    protected function passedValidation(): void
-    {
-    }
+    protected function passedValidation(): void {}
 
     /**
      * get validated data
@@ -188,18 +184,14 @@ abstract class BaseRequest extends FormRequest
      * 
      * @return void
      */
-    protected function prepareForValidateResolved(): void
-    {
-    }
+    protected function prepareForValidateResolved(): void {}
 
     /**
      * process when validate resolved is passed
      * 
      * @return void
      */
-    protected function passedValidateResolved(): void
-    {
-    }
+    protected function passedValidateResolved(): void {}
 
     /*----------------------------------------*
      * Additional Data
@@ -262,18 +254,14 @@ abstract class BaseRequest extends FormRequest
      * 
      * @return void
      */
-    protected function prepareForBindValidatedResolved(): void
-    {
-    }
+    protected function prepareForBindValidatedResolved(): void {}
 
     /**
      * process when bind validate resolved is passed
      * 
      * @return void
      */
-    protected function passedBindValidatedResolved(): void
-    {
-    }
+    protected function passedBindValidatedResolved(): void {}
 
     /**
      * set validated data
@@ -297,18 +285,14 @@ abstract class BaseRequest extends FormRequest
      * 
      * @return void
      */
-    protected function prepareForBindValidated(): void
-    {
-    }
+    protected function prepareForBindValidated(): void {}
 
     /**
      * process when bind validated is passed
      * 
      * @return void
      */
-    protected function passedBindValidated(): void
-    {
-    }
+    protected function passedBindValidated(): void {}
 
     /**
      * check if validated data is set by key
@@ -350,12 +334,15 @@ abstract class BaseRequest extends FormRequest
      * if not exists, return default
      * 
      * @param string $key
-     * @param string $default
      * @return string
      */
-    protected function bindString(string $key, string $default = ""): string
+    protected function bindString(string $key): string
     {
-        return $this->bindNullableString($key) ?? $default;
+        $bind = $this->bindNullableString($key);
+
+        if (is_null($bind)) throw $this->requiredException($key);
+
+        return $bind;
     }
 
     /**
@@ -376,12 +363,15 @@ abstract class BaseRequest extends FormRequest
      * if not exists, return default
      * 
      * @param string $key
-     * @param int $default
      * @return int
      */
-    protected function bindInt(string $key, int $default = 0): int
+    protected function bindInt(string $key): int
     {
-        return $this->bindNullableInt($key) ?? $default;
+        $bind = $this->bindNullableInt($key);
+
+        if (is_null($bind)) throw $this->requiredException($key);
+
+        return $bind;
     }
 
     /**
@@ -402,12 +392,15 @@ abstract class BaseRequest extends FormRequest
      * if not exists, return default
      * 
      * @param string $key
-     * @param float $default
      * @return float
      */
-    protected function bindFloat(string $key, float $default = 0.0): float
+    protected function bindFloat(string $key): float
     {
-        return $this->bindNullableFloat($key) ?? $default;
+        $bind = $this->bindNullableFloat($key);
+
+        if (is_null($bind)) throw $this->requiredException($key);
+
+        return $bind;
     }
 
     /**
@@ -428,12 +421,15 @@ abstract class BaseRequest extends FormRequest
      * if not exists, return default
      * 
      * @param string $key
-     * @param bool $default
      * @return bool
      */
-    protected function bindBool(string $key, bool $default = false): bool
+    protected function bindBool(string $key): bool
     {
-        return $this->bindNullableBool($key) ?? $default;
+        $bind = $this->bindNullableBool($key);
+
+        if (is_null($bind)) throw $this->requiredException($key);
+
+        return $bind;
     }
 
     /**
@@ -454,12 +450,15 @@ abstract class BaseRequest extends FormRequest
      * if not exists, return default
      * 
      * @param string $key
-     * @param array $default
      * @return array
      */
-    protected function bindArray(string $key, array $default = []): array
+    protected function bindArray(string $key): array
     {
-        return $this->bindNullableArray($key) ?? $default;
+        $bind = $this->bindNullableArray($key);
+
+        if (is_null($bind)) throw $this->requiredException($key);
+
+        return $bind;
     }
 
     /**
@@ -495,12 +494,26 @@ abstract class BaseRequest extends FormRequest
      * 
      * @param string $key
      * @param string $enumClass
-     * @param UnitEnum $default
      * @return UnitEnum
      */
-    protected function bindEnum(string $key, string $enumClass, UnitEnum $default): UnitEnum
+    protected function bindEnum(string $key, string $enumClass): UnitEnum
     {
-        return $this->bindNullableEnum($key, $enumClass) ?? $default;
+        $bind = $this->bindNullableEnum($key, $enumClass);
+
+        if (is_null($bind)) throw $this->requiredException($key);
+
+        return $bind;
+    }
+
+    /**
+     * get required exception
+     * 
+     * @param string $key
+     * @return \Throwable
+     */
+    protected function requiredException(string $key): \Throwable
+    {
+        return new \RuntimeException("{$key} is required.");
     }
 
     /*----------------------------------------*
