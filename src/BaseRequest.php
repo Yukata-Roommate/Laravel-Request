@@ -353,7 +353,6 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * get validated data as string by key
-     * if not exists, return default
      * 
      * @param string $key
      * @return string
@@ -382,7 +381,6 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * get validated data as int by key
-     * if not exists, return default
      * 
      * @param string $key
      * @return int
@@ -411,7 +409,6 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * get validated data as float by key
-     * if not exists, return default
      * 
      * @param string $key
      * @return float
@@ -435,12 +432,13 @@ abstract class BaseRequest extends FormRequest
     {
         $bind = $this->bind($key);
 
+        if (intval($bind) === 1 || intval($bind) === 0) $bind = boolval($bind);
+
         return is_bool($bind) ? boolval($bind) : null;
     }
 
     /**
      * get validated data as bool by key
-     * if not exists, return default
      * 
      * @param string $key
      * @return bool
@@ -469,7 +467,6 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * get validated data as array by key
-     * if not exists, return default
      * 
      * @param string $key
      * @return array
@@ -512,7 +509,6 @@ abstract class BaseRequest extends FormRequest
 
     /**
      * get validated data as UnitEnum by key
-     * if not exists, return default
      * 
      * @param string $key
      * @param string $enumClass
