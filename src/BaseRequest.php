@@ -151,6 +151,28 @@ abstract class BaseRequest extends FormRequest
         return $this->getMessages();
     }
 
+    /**
+     * get only properties with keys
+     * 
+     * @param array<string>|string $keys
+     * @return array<string, mixed>
+     */
+    #[\Override]
+    public function only($keys): array
+    {
+        if (is_string($keys)) $keys = func_get_args();
+
+        $only = [];
+
+        foreach ($keys as $key) {
+            if (!property_exists($this, $key)) throw new \RuntimeException("property {$key} does not exist.");
+
+            $only[$key] = $this->$key;
+        }
+
+        return $only;
+    }
+
     /*----------------------------------------*
      * Custom Methods
      *----------------------------------------*/
