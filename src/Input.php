@@ -143,7 +143,7 @@ class Input implements InputInterface
      * @param array<mixed> $values
      * @return static
      */
-    public function addRuleValues(string $ruleName, array ...$values): static
+    public function addRuleValues(string $ruleName, mixed ...$values): static
     {
         $values = implode(",", $values);
 
