@@ -152,25 +152,36 @@ abstract class BaseRequest extends FormRequest
     }
 
     /**
-     * get only properties with keys
+     * get all properties with keys
      * 
-     * @param array<string>|string $keys
+     * @param  array|mixed|null  $keys
      * @return array<string, mixed>
      */
     #[\Override]
-    public function only($keys): array
+    public function all($keys = null)
     {
-        if (is_string($keys)) $keys = func_get_args();
+        $reflector = new \ReflectionClass($this);
+        $reflectorClassName = $reflector->getName();
 
-        $only = [];
+        $properties = $reflector->getProperties(\ReflectionProperty::IS_PUBLIC);
 
-        foreach ($keys as $key) {
-            if (!property_exists($this, $key)) throw new \RuntimeException("property {$key} does not exist.");
+        $all = parent::all($keys);
 
-            $only[$key] = $this->$key;
+        foreach ($properties as $property) {
+            if ($property->class !== $reflectorClassName) continue;
+            if ($property->isInitialized($this) === false) continue;
+            if ($property->isStatic()) continue;
+
+            $name = $property->getName();
+
+            $all[$name] = $this->{$name};
         }
 
-        return $only;
+        if (is_null($keys)) return $all;
+
+        $expectedKeys = is_array($keys) ? $keys : func_get_args();
+
+        return array_intersect_key($all, array_flip($expectedKeys));
     }
 
     /*----------------------------------------*
