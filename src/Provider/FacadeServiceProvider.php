@@ -2,7 +2,7 @@
 
 namespace YukataRm\Laravel\Request\Provider;
 
-use Illuminate\Support\ServiceProvider;
+use YukataRm\Laravel\Provider\FacadeServiceProvider as BaseServiceProvider;
 
 use YukataRm\Laravel\Request\Facade\Manager;
 use YukataRm\Laravel\Request\Facade\Input;
@@ -12,17 +12,17 @@ use YukataRm\Laravel\Request\Facade\Input;
  * 
  * @package YukataRm\Laravel\Request\Provider
  */
-class FacadeServiceProvider extends ServiceProvider
+class FacadeServiceProvider extends BaseServiceProvider
 {
     /**
-     * register Facade
+     * get facades
      * 
-     * @return void
+     * @return array<string, string>
      */
-    public function register(): void
+    protected function facades(): array
     {
-        $this->app->singleton(Input::class, function () {
-            return new Manager();
-        });
+        return [
+            Input::class => Manager::class
+        ];
     }
 }

@@ -2,37 +2,40 @@
 
 namespace YukataRm\Laravel\Request\Provider;
 
-use Illuminate\Support\ServiceProvider;
+use YukataRm\Laravel\Provider\PublicationServiceProvider as BaseServiceProvider;
 
 /**
  * Publication Service Provider
  * 
  * @package YukataRm\Laravel\Request\Provider
  */
-class PublicationServiceProvider extends ServiceProvider
+class PublicationServiceProvider extends BaseServiceProvider
 {
     /**
-     * publish config
+     * base path
      * 
-     * @return void
+     * @var string
      */
-    public function boot(): void
-    {
-        $this->publishes([
-            $this->path("config") => config_path("yukata-roommate"),
-        ], "yukata-roommate");
-    }
+    protected string $basePath = __DIR__;
 
     /**
-     * get path to publications
+     * publish common group
      * 
-     * @param string|array<string> $path
-     * @return string
+     * @var string
      */
-    private function path(string|array $path): string
-    {
-        if (is_array($path)) $path = implode(DIRECTORY_SEPARATOR, $path);
+    protected string $commonGroup = "yukata-roommate";
 
-        return __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "publications" . DIRECTORY_SEPARATOR . $path;
+    /**
+     * get publications
+     * 
+     * @return array<string, array<string, string>>
+     */
+    protected function publications(): array
+    {
+        return [
+            "ym-request" => [
+                "config" => config_path("yukata-roommate"),
+            ],
+        ];
     }
 }
