@@ -3,7 +3,7 @@
     "description": "Extend Form Request for Laravel",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.13",
+    "version": "1.0.14",
     "autoload": {
         "psr-4": {
             "YukataRm\\Laravel\\Request\\": "src"
@@ -29,8 +29,7 @@
     "require": {
         "php": ">=8.2.0",
         "laravel/framework": "^11.0",
-        "yukata-roommate/laravel-provider": "^1.0.0",
-        "yukata-roommate/laravel-logger": "^1.0.0"
+        "yukata-roommate/laravel-provider": "^1.0.0"
     },
     "minimum-stability": "dev"
 }

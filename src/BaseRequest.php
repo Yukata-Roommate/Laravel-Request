@@ -4,12 +4,6 @@ namespace YukataRm\Laravel\Request;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use YukataRm\Laravel\Request\Enum\AddParameterEnum;
-
-use YukataRm\Laravel\Logger\Interface\LoggerInterface;
-use YukataRm\Laravel\Logger\Facade\Logger as LoggerFacade;
-use YukataRm\Logger\Enum\LogFormatEnum;
-
 use UnitEnum;
 
 use Illuminate\Contracts\Validation\Validator;
@@ -735,121 +729,6 @@ abstract class BaseRequest extends FormRequest
     }
 
     /*----------------------------------------*
-     * Logging Parameters
-     *----------------------------------------*/
-
-    /**
-     * is logging parameters
-     * 
-     * @var bool
-     */
-    protected bool $isLoggingParameters = false;
-
-    /**
-     * get is logging parameters
-     * 
-     * @return bool
-     */
-    protected function isLoggingParameters(): bool
-    {
-        if ($this->isLoggingParameters) return true;
-
-        return $this->configLoggingParameters();
-    }
-
-    /**
-     * execute logging parameters
-     * 
-     * @return void
-     */
-    protected function loggingParameters(): void
-    {
-        if (!$this->isLoggingParameters()) return;
-
-        $parameters = $this->validationData();
-
-        $parameters = $this->addParameters($parameters);
-
-        $parameters = $this->maskParameters($parameters);
-
-        $logger = $this->getLogger();
-
-        $logger->add(json_encode($parameters, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-
-        $logger->logging();
-    }
-
-    /**
-     * add parameters
-     * 
-     * @param array<string, mixed> $parameters
-     * @return array<string, mixed>
-     */
-    protected function addParameters(array $parameters): array
-    {
-        $addParameters = $this->configAddParameters();
-
-        if (empty($addParameters)) return $parameters;
-
-        $addParameter = null;
-
-        foreach ($addParameters as $key) {
-            $key = AddParameterEnum::tryFrom($key);
-
-            if (is_null($key)) continue;
-
-            $addParameter = match ($key) {
-                AddParameterEnum::URL        => e(request()->getRequestUri()),
-                AddParameterEnum::METHOD     => request()->method(),
-                AddParameterEnum::IP         => request()->ip(),
-                AddParameterEnum::USER_AGENT => request()->userAgent(),
-                AddParameterEnum::DATETIME   => now()->format("Y-m-d H:i:s"),
-            };
-
-            $parameters[$key->value] = $addParameter;
-        }
-
-        return $parameters;
-    }
-
-    /**
-     * mask parameters
-     * 
-     * @param array<string, mixed> $parameters
-     * @return array<string, mixed>
-     */
-    protected function maskParameters(array $parameters): array
-    {
-        $maskedParameters = $this->configMaskingParameters();
-
-        if (empty($maskedParameters)) return $parameters;
-
-        foreach ($maskedParameters as $key) {
-            if (!isset($parameters[$key])) continue;
-
-            $parameters[$key] = $this->configMaskingText();
-        }
-
-        return $parameters;
-    }
-
-    /**
-     * get Logger instance
-     * 
-     * @return \YukataRm\Laravel\Logger\Interface\LoggerInterface
-     */
-    protected function getLogger(): LoggerInterface
-    {
-        $logger = LoggerFacade::info();
-
-        $logger->setDirectory($this->configLoggingDirectly());
-
-        $logger->setLogFormat(LogFormatEnum::MESSAGE);
-
-        return $logger;
-    }
-
-    /*----------------------------------------*
      * Config
      *----------------------------------------*/
 
@@ -883,55 +762,5 @@ abstract class BaseRequest extends FormRequest
     protected function configUnauthorizedMessageKey(): string
     {
         return $this->config("unauthorized_message_key", "");
-    }
-
-    /**
-     * get config logging parameters
-     * 
-     * @return bool
-     */
-    protected function configLoggingParameters(): bool
-    {
-        return $this->config("logging_parameters", false);
-    }
-
-    /**
-     * get config logging directly
-     * 
-     * @return string
-     */
-    protected function configLoggingDirectly(): string
-    {
-        return $this->config("logging_directly", "request");
-    }
-
-    /**
-     * get config add parameters
-     * 
-     * @return array<string>
-     */
-    protected function configAddParameters(): array
-    {
-        return $this->config("add_parameters", []);
-    }
-
-    /**
-     * get config masking text
-     * 
-     * @return string
-     */
-    protected function configMaskingText(): string
-    {
-        return $this->config("masking_text", "********");
-    }
-
-    /**
-     * get config masking parameters
-     * 
-     * @return array<string>
-     */
-    protected function configMaskingParameters(): array
-    {
-        return $this->config("masking_parameters", []);
     }
 }
