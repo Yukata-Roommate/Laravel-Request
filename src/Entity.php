@@ -20,7 +20,7 @@ abstract class Entity extends ArrayEntity
      */
     public function __construct(array $validated)
     {
-        $this->set($validated);
+        $this->setData($validated);
 
         $this->bind();
     }

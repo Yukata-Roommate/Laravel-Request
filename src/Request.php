@@ -242,7 +242,7 @@ abstract class Request extends BaseRequest
      * 
      * @return \YukataRm\Laravel\Request\Entity
      */
-    protected function entity(): Entity
+    public function entity(): Entity
     {
         $entityClass = $this->entity;
 
