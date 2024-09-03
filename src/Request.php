@@ -6,6 +6,8 @@ use YukataRm\Laravel\Request\BaseRequest;
 
 use YukataRm\Laravel\Request\Entity;
 
+use Illuminate\Support\Facades\Route;
+
 /**
  * Request for Laravel
  * 
