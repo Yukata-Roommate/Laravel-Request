@@ -2,31 +2,31 @@
 
 namespace YukataRm\Laravel\Request;
 
-use YukataRm\Laravel\Request\BaseRequest;
+use YukataRm\Laravel\Request\Request;
 
-use YukataRm\Laravel\Request\Facade\Input;
+use YukataRm\Laravel\Request\Facade\Validation;
 
 /**
- * Base Pagination Request
+ * Pagination Request for Laravel
  * 
  * @package YukataRm\Laravel\Request
  */
-abstract class BasePaginationRequest extends BaseRequest
+abstract class PaginationRequest extends Request
 {
     /*----------------------------------------*
      * Override
      *----------------------------------------*/
 
     /**
-     * set input array
+     * set Validation array
      * 
      * @return void
      */
     #[\Override]
-    protected function setInputs(): void
+    protected function setValidations(): void
     {
-        $this->inputs = array_merge($this->inputs(), [
-            Input::filled("page")->integer(),
+        $this->validations = array_merge($this->validations(), [
+            Validation::filled("page")->integer(),
         ]);
     }
 
@@ -58,7 +58,7 @@ abstract class BasePaginationRequest extends BaseRequest
      */
     public function page(): int
     {
-        return $this->bindNullableInt("page") ?? 1;
+        return $this->entity()->nullableInt("page") ?? 1;
     }
 
     /**

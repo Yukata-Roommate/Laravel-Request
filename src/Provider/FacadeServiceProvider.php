@@ -5,7 +5,7 @@ namespace YukataRm\Laravel\Request\Provider;
 use YukataRm\Laravel\Provider\FacadeServiceProvider as BaseServiceProvider;
 
 use YukataRm\Laravel\Request\Facade\Manager;
-use YukataRm\Laravel\Request\Facade\Input;
+use YukataRm\Laravel\Request\Facade\Validation;
 
 /**
  * Facade Service Provider
@@ -22,7 +22,7 @@ class FacadeServiceProvider extends BaseServiceProvider
     protected function facades(): array
     {
         return [
-            Input::class => Manager::class
+            Validation::class => Manager::class
         ];
     }
 }

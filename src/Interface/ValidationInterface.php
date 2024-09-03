@@ -1,78 +1,32 @@
 <?php
 
-namespace YukataRm\Laravel\Request;
-
-use YukataRm\Laravel\Request\Interface\InputInterface;
+namespace YukataRm\Laravel\Request\Interface;
 
 use Stringable;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
- * Input in Request
+ * Validation Interface
  * 
- * @package YukataRm\Laravel\Request
+ * @package YukataRm\Laravel\Request\Interface
  */
-class Input implements InputInterface
+interface ValidationInterface
 {
     /*----------------------------------------*
      * Constructor
      *----------------------------------------*/
 
     /**
-     * key name
-     *
-     * @var string
-     */
-    protected string $keyName;
-
-    /**
-     * constructor
-     * 
-     * @param string $keyName
-     */
-    public function __construct(string $keyName)
-    {
-        if (empty($keyName)) throw new \RuntimeException("keyName cannot be empty.");
-
-        $this->keyName = $keyName;
-    }
-
-    /**
      * get key name
      * 
      * @return string
      */
-    public function getKeyName(): string
-    {
-        return $this->keyName;
-    }
+    public function getKeyName(): string;
 
     /*----------------------------------------*
      * Property
      *----------------------------------------*/
-
-    /**
-     * attribute name
-     * 
-     * @var string|null
-     */
-    protected string|null $attributeName = null;
-
-    /**
-     * validation rules
-     * 
-     * @var array<\Stringable|array<mixed>|string>
-     */
-    protected array $rules = [];
-
-    /**
-     * failed validation messages
-     * 
-     * @var array<string, string>
-     */
-    protected array $messages = [];
 
     /**
      * set attribute name
@@ -80,22 +34,14 @@ class Input implements InputInterface
      * @param string $attributeName
      * @return static
      */
-    public function setAttributeName(string $attributeName): static
-    {
-        $this->attributeName = $attributeName;
-
-        return $this;
-    }
+    public function setAttributeName(string $attributeName): static;
 
     /**
      * get attribute name
      * 
      * @return string|null
      */
-    public function getAttributeName(): string|null
-    {
-        return __($this->attributeName);
-    }
+    public function getAttributeName(): string|null;
 
     /**
      * set validation rules
@@ -103,12 +49,7 @@ class Input implements InputInterface
      * @param array<\Stringable|array<mixed>|string> $rules
      * @return static
      */
-    public function setRules(array $rules): static
-    {
-        $this->rules = $rules;
-
-        return $this;
-    }
+    public function setRules(array $rules): static;
 
     /**
      * merge validation rules
@@ -116,12 +57,7 @@ class Input implements InputInterface
      * @param array<\Stringable|array<mixed>|string> $rules
      * @return static
      */
-    public function mergeRules(array $rules): static
-    {
-        $this->rules = array_merge($this->rules, $rules);
-
-        return $this;
-    }
+    public function mergeRules(array $rules): static;
 
     /**
      * add validation rule
@@ -129,12 +65,7 @@ class Input implements InputInterface
      * @param \Stringable|array<mixed>|string $rule
      * @return static
      */
-    public function addRule(Stringable|array|string $rule): static
-    {
-        $this->rules[] = $rule;
-
-        return $this;
-    }
+    public function addRule(Stringable|array|string $rule): static;
 
     /**
      * add validation rule with values
@@ -143,22 +74,14 @@ class Input implements InputInterface
      * @param array<mixed> $values
      * @return static
      */
-    public function addRuleValues(string $ruleName, mixed ...$values): static
-    {
-        $values = implode(",", $values);
-
-        return $this->addRule("{$ruleName}:{$values}");
-    }
+    public function addRuleValues(string $ruleName, array $values): static;
 
     /**
      * get validation rules
      * 
      * @return array<\Stringable|array<mixed>|string>
      */
-    public function getRules(): array
-    {
-        return $this->rules;
-    }
+    public function getRules(): array;
 
     /**
      * set failed validation messages
@@ -166,12 +89,7 @@ class Input implements InputInterface
      * @param array<string, string> $messages
      * @return static
      */
-    public function setMessages(array $messages): static
-    {
-        $this->messages = $messages;
-
-        return $this;
-    }
+    public function setMessages(array $messages): static;
 
     /**
      * merge failed validation messages
@@ -179,12 +97,7 @@ class Input implements InputInterface
      * @param array<string, string> $messages
      * @return static
      */
-    public function mergeMessages(array $messages): static
-    {
-        $this->messages = array_merge($this->messages, $messages);
-
-        return $this;
-    }
+    public function mergeMessages(array $messages): static;
 
     /**
      * add failed validation message
@@ -193,78 +106,14 @@ class Input implements InputInterface
      * @param string $message
      * @return static
      */
-    public function addMessage(string $ruleKey, string $message): static
-    {
-        $messageKey = "{$this->keyName}.{$ruleKey}";
-
-        $this->messages[$messageKey] = $message;
-
-        return $this;
-    }
+    public function addMessage(string $ruleKey, string $message): static;
 
     /**
      * get failed validation messages
      * 
      * @return array<string, string>
      */
-    public function getMessages(): array
-    {
-        return $this->messages;
-    }
-
-    /**
-     * get validation rules and failed validation messages
-     * 
-     * @param string $ruleKey
-     * @param string|null $message
-     * @return static
-     */
-    protected function addRuleAndMessage(string $ruleKey, string $message = null): static
-    {
-        $this->addRule($ruleKey);
-
-        if (!is_null($message)) $this->addMessage($ruleKey, $message);
-
-        return $this;
-    }
-
-    /**
-     * add validation rule with values and failed validation message
-     * 
-     * @param string $ruleKey
-     * @param array<string|int>|string|int $values
-     * @param string|null $message
-     * @return static
-     */
-    protected function addRuleValuesAndMessage(string $ruleKey, array|string|int $values, string $message = null): static
-    {
-        if (is_string($values) && $values !== "") $values = [$values];
-
-        if (is_numeric($values)) $values = [$values];
-
-        $this->addRuleValues($ruleKey, ...$values);
-
-        if (!is_null($message)) $this->addMessage($ruleKey, $message);
-
-        return $this;
-    }
-
-    /**
-     * add validation rule object and failed validation message
-     * 
-     * @param string $ruleKey
-     * @param \Stringable $rule
-     * @param string|null $message
-     * @return static
-     */
-    protected function addRuleObjectAndMessage(string $ruleKey, Stringable $rule, string $message = null): static
-    {
-        $this->addRule($rule);
-
-        if (!is_null($message)) $this->addMessage($ruleKey, $message);
-
-        return $this;
-    }
+    public function getMessages(): array;
 
     /*----------------------------------------*
      * Rule Array
@@ -278,12 +127,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function array(array|string|null $acceptKeys = null, string $message = null): static
-    {
-        return empty($acceptKeys)
-            ? $this->addRuleAndMessage("array", $message)
-            : $this->addRuleValuesAndMessage("array", $acceptKeys, $message);
-    }
+    public function array(array|string|null $acceptKeys = null, string $message = null): static;
 
     /**
      * validate parameter as an array and validate parameter has specified keys
@@ -292,10 +136,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function requiredArrayKeys(array|string $keys, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("required_array_keys", $keys, $message);
-    }
+    public function requiredArrayKeys(array|string $keys, string $message = null): static;
 
     /**
      * validate parameter is one of values field has
@@ -305,10 +146,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function inArray(string $field, string $key, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("in_array", [$field, $key], $message);
-    }
+    public function inArray(string $field, string $key, string $message = null): static;
 
     /**
      * validate parameter is an array and has no duplicate values
@@ -316,10 +154,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function distinct(string $message = null): static
-    {
-        return $this->addRuleAndMessage("distinct", $message);
-    }
+    public function distinct(string $message = null): static;
 
     /**
      * validate strict parameter is an array and has no duplicate values
@@ -327,10 +162,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function distinctStrict(string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("distinct", "strict", $message);
-    }
+    public function distinctStrict(string $message = null): static;
 
     /**
      * validate case-insensitive parameter is an array and has no duplicate values
@@ -338,10 +170,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function distinctIgnoreCase(string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("distinct", "ignore_case", $message);
-    }
+    public function distinctIgnoreCase(string $message = null): static;
 
     /*----------------------------------------*
      * Rule Boolean
@@ -353,10 +182,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function boolean(string $message = null): static
-    {
-        return $this->addRuleAndMessage("boolean", $message);
-    }
+    public function boolean(string $message = null): static;
 
     /*----------------------------------------*
      * Rule Date
@@ -368,10 +194,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function date(string $message = null): static
-    {
-        return $this->addRuleAndMessage("date", $message);
-    }
+    public function date(string $message = null): static;
 
     /**
      * validate parameter as a date value and format it with specified format
@@ -380,10 +203,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function dateFormat(string $format, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("date_format", $format, $message);
-    }
+    public function dateFormat(string $format, string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is equal to date
@@ -392,10 +212,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function dateEqual(string $date, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("date_equals", $date, $message);
-    }
+    public function dateEqual(string $date, string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is later than date
@@ -405,10 +222,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function after(string $date, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("after", $date, $message);
-    }
+    public function after(string $date, string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is later than or equal to date
@@ -418,10 +232,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function afterOrEqual(string $date, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("after_or_equal", $date, $message);
-    }
+    public function afterOrEqual(string $date, string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is earlier than date
@@ -431,10 +242,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function before(string $date, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("before", $date, $message);
-    }
+    public function before(string $date, string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is earlier than or equal to date
@@ -444,23 +252,17 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function beforeOrEqual(string $date, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("before_or_equal", $date, $message);
-    }
+    public function beforeOrEqual(string $date, string $message = null): static;
 
     /**
      * validate parameter is a valid time zone
-     * if an identifier is specified, validate time zone is available in identifier
+     * if an identifier is specified, validates time zone is available in identifier
      * 
      * @param string|null $identifier
      * @param string|null $message
      * @return static
      */
-    public function timezone(string $identifier = null, string $message = null): static
-    {
-        return is_null($identifier) ? $this->addRuleAndMessage("timezone", $message) : $this->addRuleValuesAndMessage("timezone", $identifier, $message);
-    }
+    public function timezone(string $identifier = null, string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and follows Y-m-d format
@@ -468,10 +270,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asDate(string $message = null): static
-    {
-        return $this->dateFormat("Y-m-d", $message);
-    }
+    public function asDate(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and follows H:i:s format
@@ -479,10 +278,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asTime(string $message = null): static
-    {
-        return $this->dateFormat("H:i:s", $message);
-    }
+    public function asTime(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and follows Y-m-d H:i:s format
@@ -490,10 +286,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asDateTime(string $message = null): static
-    {
-        return $this->dateFormat("Y-m-d H:i:s", $message);
-    }
+    public function asDateTime(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and follows Y-m format
@@ -501,10 +294,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asYearMonth(string $message = null): static
-    {
-        return $this->dateFormat("Y-m", $message);
-    }
+    public function asYearMonth(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and follows m-d format
@@ -512,10 +302,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asMonthDay(string $message = null): static
-    {
-        return $this->dateFormat("m-d", $message);
-    }
+    public function asMonthDay(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and follows H:i format
@@ -523,10 +310,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asHourMinute(string $message = null): static
-    {
-        return $this->dateFormat("H:i", $message);
-    }
+    public function asHourMinute(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and follows i:s format
@@ -534,10 +318,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asMinuteSecond(string $message = null): static
-    {
-        return $this->dateFormat("i:s", $message);
-    }
+    public function asMinuteSecond(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid year
@@ -545,10 +326,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asYear(string $message = null): static
-    {
-        return $this->dateFormat("Y", $message);
-    }
+    public function asYear(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid month
@@ -556,10 +334,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asMonth(string $message = null): static
-    {
-        return $this->dateFormat("n", $message);
-    }
+    public function asMonth(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid 0-padded month
@@ -567,10 +342,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asMonthZero(string $message = null): static
-    {
-        return $this->dateFormat("m", $message);
-    }
+    public function asMonthZero(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid month name
@@ -578,10 +350,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asMonthName(array|string $message = null): static
-    {
-        return $this->dateFormat("F", $message);
-    }
+    public function asMonthName(array|string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid short month name
@@ -589,10 +358,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asMonthNameShort(array|string $message = null): static
-    {
-        return $this->dateFormat("M", $message);
-    }
+    public function asMonthNameShort(array|string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid day
@@ -600,10 +366,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asDay(string $message = null): static
-    {
-        return $this->dateFormat("j", $message);
-    }
+    public function asDay(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid 0-padded day
@@ -611,10 +374,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asDayZero(string $message = null): static
-    {
-        return $this->dateFormat("d", $message);
-    }
+    public function asDayZero(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid hour
@@ -622,10 +382,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asHour(string $message = null): static
-    {
-        return $this->dateFormat("G", $message);
-    }
+    public function asHour(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid 0-padded hour
@@ -633,10 +390,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asHourZero(string $message = null): static
-    {
-        return $this->dateFormat("H", $message);
-    }
+    public function asHourZero(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid 12-hour notation hour
@@ -644,10 +398,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asHourTwelveNotation(string $message = null): static
-    {
-        return $this->dateFormat("g", $message);
-    }
+    public function asHourTwelveNotation(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid 0-padded 12-hour notation hour
@@ -655,10 +406,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asHourTwelveNotationZero(string $message = null): static
-    {
-        return $this->dateFormat("h", $message);
-    }
+    public function asHourTwelveNotationZero(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid minute
@@ -666,10 +414,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asMinute(string $message = null): static
-    {
-        return $this->dateFormat("i", $message);
-    }
+    public function asMinute(string $message = null): static;
 
     /**
      * validate parameter is a value can be treated as a date and is a valid second
@@ -677,10 +422,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function asSecond(string $message = null): static
-    {
-        return $this->dateFormat("s", $message);
-    }
+    public function asSecond(string $message = null): static;
 
     /*----------------------------------------*
      * Rule Field
@@ -693,10 +435,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function same(string $field, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("same", $field, $message);
-    }
+    public function same(string $field, string $message = null): static;
 
     /**
      * validate parameter does not match value of field
@@ -705,10 +444,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function different(string $field, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("different", $field, $message);
-    }
+    public function different(string $field, string $message = null): static;
 
     /**
      * validate parameter is greater than value of field
@@ -717,10 +453,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function gt(string $field, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("gt", $field, $message);
-    }
+    public function gt(string $field, string $message = null): static;
 
     /**
      * validate parameter is greater than or equal to value of field
@@ -729,10 +462,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function gte(string $field, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("gte", $field, $message);
-    }
+    public function gte(string $field, string $message = null): static;
 
     /**
      * validate parameter is less than value of field
@@ -741,10 +471,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function lt(string $field, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("lt", $field, $message);
-    }
+    public function lt(string $field, string $message = null): static;
 
     /**
      * validate parameter is less than or equal to value of field
@@ -753,10 +480,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function lte(string $field, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("lte", $field, $message);
-    }
+    public function lte(string $field, string $message = null): static;
 
     /**
      * validate {field}_confirmation exists as a parameter and parameter matches it
@@ -764,10 +488,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function confirmed(string $message = null): static
-    {
-        return $this->addRuleAndMessage("confirmed", $message);
-    }
+    public function confirmed(string $message = null): static;
 
     /**
      * validate parameter is 1, true, “on”, “yes”
@@ -775,10 +496,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function accepted(string $message = null): static
-    {
-        return $this->addRuleAndMessage("accepted", $message);
-    }
+    public function accepted(string $message = null): static;
 
     /**
      * validate parameter is 1, true, “on”, “yes” if field is equal to value
@@ -788,10 +506,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function acceptedIf(string $field, mixed $value, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("accepted_if", [$field, $value], $message);
-    }
+    public function acceptedIf(string $field, mixed $value, string $message = null): static;
 
     /**
      * validate parameter is 0, false, “off”, “no”
@@ -799,10 +514,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function declined(string $message = null): static
-    {
-        return $this->addRuleAndMessage("declined", $message);
-    }
+    public function declined(string $message = null): static;
 
     /**
      * validate parameter is 0, false, “off”, “no” if field is equal to value
@@ -812,10 +524,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function declinedIf(string $field, mixed $value, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("declined_if", [$field, $value], $message);
-    }
+    public function declinedIf(string $field, mixed $value, string $message = null): static;
 
     /*----------------------------------------*
      * Rule File
@@ -827,10 +536,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function file(string $message = null): static
-    {
-        return $this->addRuleAndMessage("file", $message);
-    }
+    public function file(string $message = null): static;
 
     /**
      * validate parameter as an image
@@ -838,10 +544,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function image(string $message = null): static
-    {
-        return $this->addRuleAndMessage("image", $message);
-    }
+    public function image(string $message = null): static;
 
     /**
      * validate parameter is a file, mime type corresponding to one of extensions specified in extensions
@@ -850,10 +553,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function mimes(array|string $extensions, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("mimes", $extensions, $message);
-    }
+    public function mimes(array|string $extensions, string $message = null): static;
 
     /**
      * validate parameter is a file, mime type corresponding to one of mimetypes specified in mimetypes
@@ -862,10 +562,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function mimetypes(array|string $mimetypes, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("mimetypes", $mimetypes, $message);
-    }
+    public function mimetypes(array|string $mimetypes, string $message = null): static;
 
     /**
      * validate parameter is a file and extension is one of those specified in extensions
@@ -874,10 +571,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function extensions(array|string $extensions, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("extensions", $extensions, $message);
-    }
+    public function extensions(array|string $extensions, string $message = null): static;
 
     /**
      * validate parameter is a file and matches specified size
@@ -892,29 +586,10 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function dimensions(int $width = null, int $height = null, int $minWidth = null, int $minHeight = null, int $maxWidth = null, int $maxHeight = null, float|string $ratio = null, string $message = null): static
-    {
-        $rules = [];
-
-        if (!is_null($width)) $rules[] = "width={$width}";
-
-        if (!is_null($height)) $rules[] = "height={$height}";
-
-        if (!is_null($minWidth)) $rules[] = "min_width={$minWidth}";
-
-        if (!is_null($minHeight)) $rules[] = "min_height={$minHeight}";
-
-        if (!is_null($maxWidth)) $rules[] = "max_width={$maxWidth}";
-
-        if (!is_null($maxHeight)) $rules[] = "max_height={$maxHeight}";
-
-        if (!is_null($ratio)) $rules[] = "ratio={$ratio}";
-
-        return empty($rules) ? $this : $this->addRuleValuesAndMessage("dimensions", $rules, $message);
-    }
+    public function dimensions(int $width = null, int $height = null, int $minWidth = null, int $minHeight = null, int $maxWidth = null, int $maxHeight = null, float|string $ratio = null, string $message = null): static;
 
     /*----------------------------------------*
-     * Rule Necessary
+     * Rule Necessity
      *----------------------------------------*/
 
     /**
@@ -923,10 +598,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function required(string $message = null): static
-    {
-        return $this->addRuleAndMessage("required", $message);
-    }
+    public function required(string $message = null): static;
 
     /**
      * validate parameter is required if field matches value
@@ -936,10 +608,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function requiredIfField(string $field, array $values, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("required_if", [$field, ...$values], $message);
-    }
+    public function requiredIfField(string $field, array $values, string $message = null): static;
 
     /**
      * validate parameter is required if field matches 1, true, “on”, “yes”
@@ -948,10 +617,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function requiredIfAccepted(array|string $fields, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("required_if_accepted", $fields, $message);
-    }
+    public function requiredIfAccepted(array|string $fields, string $message = null): static;
 
     /**
      * validate parameter is required if field does not match value
@@ -961,10 +627,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function requiredUnlessField(string $field, array $values, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("required_unless", [$field, ...$values], $message);
-    }
+    public function requiredUnlessField(string $field, array $values, string $message = null): static;
 
     /**
      * validate parameter is required if some of fields are present
@@ -973,10 +636,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function requiredWith(array|string $fields, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("required_with", $fields, $message);
-    }
+    public function requiredWith(array|string $fields, string $message = null): static;
 
     /**
      * validate parameter is required if all of fields are present
@@ -985,10 +645,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function requiredWithAll(array|string $fields, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("required_with_all", $fields, $message);
-    }
+    public function requiredWithAll(array|string $fields, string $message = null): static;
 
     /**
      * validate parameter is required if some of fields are not present
@@ -997,10 +654,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function requiredWithout(array|string $fields, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("required_without", $fields, $message);
-    }
+    public function requiredWithout(array|string $fields, string $message = null): static;
 
     /**
      * validate parameter is required if all of fields are not present
@@ -1009,10 +663,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function requiredWithoutAll(array|string $fields, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("required_without_all", $fields, $message);
-    }
+    public function requiredWithoutAll(array|string $fields, string $message = null): static;
 
     /**
      * validate parameter is not present
@@ -1020,10 +671,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function missing(string $message = null): static
-    {
-        return $this->addRuleAndMessage("missing", $message);
-    }
+    public function missing(string $message = null): static;
 
     /**
      * validate parameter is not present if field matches value
@@ -1033,10 +681,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function missingIfField(string $field, array $values, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("missing_if", [$field, ...$values], $message);
-    }
+    public function missingIfField(string $field, array $values, string $message = null): static;
 
     /**
      * validate parameter is not present if field does not match value
@@ -1046,10 +691,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function missingUnlessField(string $field, array $values, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("missing_unless", [$field, ...$values], $message);
-    }
+    public function missingUnlessField(string $field, array $values, string $message = null): static;
 
     /**
      * validate parameter is not present if some of fields are present
@@ -1058,10 +700,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function missingWith(array|string $fields, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("missing_with", $fields, $message);
-    }
+    public function missingWith(array|string $fields, string $message = null): static;
 
     /**
      * validate parameter is not present if all of fields are present
@@ -1070,10 +709,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function missingWithAll(array|string $fields, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("missing_with_all", $fields, $message);
-    }
+    public function missingWithAll(array|string $fields, string $message = null): static;
 
     /**
      * validate parameter is not present if some of fields are not present
@@ -1082,10 +718,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function missingWithout(array|string $fields, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("missing_without", $fields, $message);
-    }
+    public function missingWithout(array|string $fields, string $message = null): static;
 
     /**
      * validate parameter is not present if all of fields are not present
@@ -1094,10 +727,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function missingWithoutAll(array|string $fields, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("missing_without_all", $fields, $message);
-    }
+    public function missingWithoutAll(array|string $fields, string $message = null): static;
 
     /**
      * validate parameter is not present, or is an empty
@@ -1105,10 +735,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function prohibited(string $message = null): static
-    {
-        return $this->addRuleAndMessage("prohibited", $message);
-    }
+    public function prohibited(string $message = null): static;
 
     /**
      * validate parameter is not present, or is an empty if field matches value
@@ -1118,10 +745,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function prohibitedIfField(string $field, array $values, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("prohibited_if", [$field, ...$values], $message);
-    }
+    public function prohibitedIfField(string $field, array $values, string $message = null): static;
 
     /**
      * validate parameter is not present, or is an empty if field does not match value
@@ -1131,10 +755,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function prohibitedUnlessField(string $field, array $values, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("prohibited_unless", [$field, ...$values], $message);
-    }
+    public function prohibitedUnlessField(string $field, array $values, string $message = null): static;
 
     /**
      * validate all fields in fields are absent or empty if parameter is present and non-empty
@@ -1143,10 +764,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function prohibits(array|string $fields, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("prohibits", $fields, $message);
-    }
+    public function prohibits(array|string $fields, string $message = null): static;
 
     /**
      * validate parameter is present
@@ -1154,10 +772,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function present(string $message = null): static
-    {
-        return $this->addRuleAndMessage("present", $message);
-    }
+    public function present(string $message = null): static;
 
     /**
      * validate parameter is not empty if parameter is present
@@ -1165,10 +780,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function filled(string $message = null): static
-    {
-        return $this->addRuleAndMessage("filled", $message);
-    }
+    public function filled(string $message = null): static;
 
     /**
      * nullable parameter
@@ -1176,10 +788,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function nullable(string $message = null): static
-    {
-        return $this->addRuleAndMessage("nullable", $message);
-    }
+    public function nullable(string $message = null): static;
 
     /**
      * validate parameter is required if isRequired is true
@@ -1188,10 +797,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function requiredIf(bool $isRequired, string $message = null): static
-    {
-        return $isRequired ? $this->required($message) : $this;
-    }
+    public function requiredIf(bool $isRequired, string $message = null): static;
 
     /**
      * validate parameter is required if isRequired is false
@@ -1200,10 +806,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function requiredUnless(bool $isRequired, string $message = null): static
-    {
-        return !$isRequired ? $this->required($message) : $this;
-    }
+    public function requiredUnless(bool $isRequired, string $message = null): static;
 
     /**
      * validate parameter is not present if isMissing is true
@@ -1212,10 +815,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function missingIf(bool $isMissing, string $message = null): static
-    {
-        return $isMissing ? $this->missing($message) : $this;
-    }
+    public function missingIf(bool $isMissing, string $message = null): static;
 
     /**
      * validate parameter is not present if isMissing is false
@@ -1224,10 +824,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function missingUnless(bool $isMissing, string $message = null): static
-    {
-        return !$isMissing ? $this->missing($message) : $this;
-    }
+    public function missingUnless(bool $isMissing, string $message = null): static;
 
     /**
      * validate parameter is not present, or is an empty if isProhibited is true
@@ -1236,10 +833,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function prohibitedIf(bool $isProhibited, string $message = null): static
-    {
-        return $isProhibited ? $this->prohibited($message) : $this;
-    }
+    public function prohibitedIf(bool $isProhibited, string $message = null): static;
 
     /**
      * validate parameter is not present, or is an empty if isProhibited is false
@@ -1248,10 +842,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function prohibitedUnless(bool $isProhibited, string $message = null): static
-    {
-        return !$isProhibited ? $this->prohibited($message) : $this;
-    }
+    public function prohibitedUnless(bool $isProhibited, string $message = null): static;
 
     /*----------------------------------------*
      * Rule Numeric
@@ -1263,10 +854,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function numeric(string $message = null): static
-    {
-        return $this->addRuleAndMessage("numeric", $message);
-    }
+    public function numeric(string $message = null): static;
 
     /**
      * validate parameter is an integer
@@ -1274,10 +862,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function integer(string $message = null): static
-    {
-        return $this->addRuleAndMessage("integer", $message);
-    }
+    public function integer(string $message = null): static;
 
     /**
      * validate parameter is a number multiple of num
@@ -1286,10 +871,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function multipleOf(int $num, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("multiple_of", $num, $message);
-    }
+    public function multipleOf(int $num, string $message = null): static;
 
     /**
      * validate parameter has a number of decimal places greater than or equal to min and less than or equal to max
@@ -1300,12 +882,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function decimal(int $min, int $max = null, string $message = null): static
-    {
-        return is_null($max)
-            ? $this->addRuleValuesAndMessage("decimal", $min, $message)
-            : $this->addRuleValuesAndMessage("decimal", [$min, $max], $message);
-    }
+    public function decimal(int $min, int $max = null, string $message = null): static;
 
     /**
      * validate parameter has a number of digits greater than min and less than max
@@ -1316,12 +893,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function digits(int $min, int $max = null, string $message = null): static
-    {
-        return is_null($max)
-            ? $this->addRuleValuesAndMessage("digits", $min, $message)
-            : $this->addRuleValuesAndMessage("digits_between", [$min, $max], $message);
-    }
+    public function digits(int $min, int $max = null, string $message = null): static;
 
     /**
      * validate number of digits in parameter is less than or equal to max
@@ -1330,10 +902,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function maxDigits(int $max, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("max_digits", $max, $message);
-    }
+    public function maxDigits(int $max, string $message = null): static;
 
     /**
      * validate number of digits in parameter is greater than or equal to min
@@ -1342,10 +911,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function minDigits(int $min, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("min_digits", $min, $message);
-    }
+    public function minDigits(int $min, string $message = null): static;
 
     /*----------------------------------------*
      * Rule Regex
@@ -1358,10 +924,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function regex(string $pattern, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("regex", $pattern, $message);
-    }
+    public function regex(string $pattern, string $message = null): static;
 
     /**
      * validate parameter does not match regular expression pattern
@@ -1370,10 +933,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function notRegex(string $pattern, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("not_regex", $pattern, $message);
-    }
+    public function notRegex(string $pattern, string $message = null): static;
 
     /**
      * validate parameter matches pattern of a valid telephone number
@@ -1381,10 +941,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function tel(string $message = null): static
-    {
-        return $this->regex("/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/", $message);
-    }
+    public function tel(string $message = null): static;
 
     /**
      * validate parameter matches pattern of a valid post code
@@ -1392,10 +949,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function postCode(string $message = null): static
-    {
-        return $this->regex("/^[0-9]{3}-[0-9]{4}$/", $message);
-    }
+    public function postCode(string $message = null): static;
 
     /*----------------------------------------*
      * Rule Size
@@ -1408,10 +962,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function size(int $size, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("size", $size, $message);
-    }
+    public function size(int $size, string $message = null): static;
 
     /**
      * validate parameter is less than or equal to max
@@ -1420,10 +971,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function max(int $max, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("max", $max, $message);
-    }
+    public function max(int $max, string $message = null): static;
 
     /**
      * validate parameter is greater than or equal to min
@@ -1432,10 +980,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function min(int $min, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("min", $min, $message);
-    }
+    public function min(int $min, string $message = null): static;
 
     /**
      * validate parameter is between min and max
@@ -1445,10 +990,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function between(int $min, int $max, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("between", [$min, $max], $message);
-    }
+    public function between(int $min, int $max, string $message = null): static;
 
     /**
      * validate parameter is flag integer
@@ -1456,10 +998,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function flag(string $message = null): static
-    {
-        return $this->between(0, 1, $message);
-    }
+    public function flag(string $message = null): static;
 
     /*----------------------------------------*
      * Rule String
@@ -1471,10 +1010,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function string(string $message = null): static
-    {
-        return $this->addRuleAndMessage("string", $message);
-    }
+    public function string(string $message = null): static;
 
     /**
      * validate parameter is a JSON string
@@ -1482,10 +1018,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function json(string $message = null): static
-    {
-        return $this->addRuleAndMessage("json", $message);
-    }
+    public function json(string $message = null): static;
 
     /**
      * validate parameter matches password of authenticated user
@@ -1494,10 +1027,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function currentPassword(string $guard = "web", string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("current_password", $guard, $message);
-    }
+    public function currentPassword(string $guard = "web", string $message = null): static;
 
     /**
      * validate parameter is an email address
@@ -1505,10 +1035,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function email(string $message = null): static
-    {
-        return $this->addRuleAndMessage("email", $message);
-    }
+    public function email(string $message = null): static;
 
     /**
      * validate parameter is a URL
@@ -1516,10 +1043,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function url(string $message = null): static
-    {
-        return $this->addRuleAndMessage("url", $message);
-    }
+    public function url(string $message = null): static;
 
     /**
      * validate parameter is a valid URL
@@ -1527,10 +1051,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function activeUrl(string $message = null): static
-    {
-        return $this->addRuleAndMessage("active_url", $message);
-    }
+    public function activeUrl(string $message = null): static;
 
     /**
      * validate parameters are uppercase
@@ -1538,10 +1059,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function uppercase(string $message = null): static
-    {
-        return $this->addRuleAndMessage("uppercase", $message);
-    }
+    public function uppercase(string $message = null): static;
 
     /**
      * validate parameters are lowercase
@@ -1549,10 +1067,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function lowercase(string $message = null): static
-    {
-        return $this->addRuleAndMessage("lowercase", $message);
-    }
+    public function lowercase(string $message = null): static;
 
     /**
      * validate parameter is a valid IP address
@@ -1560,10 +1075,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function ip(string $message = null): static
-    {
-        return $this->addRuleAndMessage("ip", $message);
-    }
+    public function ip(string $message = null): static;
 
     /**
      * validate parameter is an IPv4 address
@@ -1571,10 +1083,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function ipv4(string $message = null): static
-    {
-        return $this->addRuleAndMessage("ipv4", $message);
-    }
+    public function ipv4(string $message = null): static;
 
     /**
      * validate parameter is an IPv6 address
@@ -1582,10 +1091,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function ipv6(string $message = null): static
-    {
-        return $this->addRuleAndMessage("ipv6", $message);
-    }
+    public function ipv6(string $message = null): static;
 
     /**
      * validate parameter is a valid MAC address
@@ -1593,10 +1099,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function macAddress(string $message = null): static
-    {
-        return $this->addRuleAndMessage("mac_address", $message);
-    }
+    public function macAddress(string $message = null): static;
 
     /**
      * validate parameter is a UUID
@@ -1604,10 +1107,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function uuid(string $message = null): static
-    {
-        return $this->addRuleAndMessage("uuid", $message);
-    }
+    public function uuid(string $message = null): static;
 
     /**
      * validate parameter is a ULID
@@ -1615,10 +1115,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function ulid(string $message = null): static
-    {
-        return $this->addRuleAndMessage("ulid", $message);
-    }
+    public function ulid(string $message = null): static;
 
     /**
      * validate parameter consist of ASCII characters
@@ -1626,10 +1123,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function ascii(string $message = null): static
-    {
-        return $this->addRuleAndMessage("ascii", $message);
-    }
+    public function ascii(string $message = null): static;
 
     /**
      * validate parameters consist of Unicode alphabetic characters
@@ -1639,12 +1133,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function alpha(bool $isAscii = false, string $message = null): static
-    {
-        return $isAscii
-            ? $this->addRuleValuesAndMessage("alpha", "ascii", $message)
-            : $this->addRuleAndMessage("alpha", $message);
-    }
+    public function alpha(bool $isAscii = false, string $message = null): static;
 
     /**
      * validate parameters consist of Unicode alphabetic characters and numbers
@@ -1654,12 +1143,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function alphaNum(bool $isAscii = false, string $message = null): static
-    {
-        return $isAscii
-            ? $this->addRuleValuesAndMessage("alpha_num", "ascii", $message)
-            : $this->addRuleAndMessage("alpha_num", $message);
-    }
+    public function alphaNum(bool $isAscii = false, string $message = null): static;
 
     /**
      * validate parameters consist of Unicode alphabetic characters, numbers, underscores and hyphens
@@ -1669,12 +1153,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function alphaDash(bool $isAscii = false, string $message = null): static
-    {
-        return $isAscii
-            ? $this->addRuleValuesAndMessage("alpha_dash", "ascii", $message)
-            : $this->addRuleAndMessage("alpha_dash", $message);
-    }
+    public function alphaDash(bool $isAscii = false, string $message = null): static;
 
     /**
      * validate parameter is a valid color code in hexadecimal format
@@ -1682,10 +1161,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function hexColor(string $message = null): static
-    {
-        return $this->addRuleAndMessage("hex_color", $message);
-    }
+    public function hexColor(string $message = null): static;
 
     /*----------------------------------------*
      * Rule Table
@@ -1700,12 +1176,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function exists(string $table, string $column = null, string $message = null): static
-    {
-        if (is_null($column)) $column = $this->keyName;
-
-        return $this->addRuleObjectAndMessage("exists", Rule::exists($table, $column), $message);
-    }
+    public function exists(string $table, string $column = null, string $message = null): static;
 
     /**
      * validate parameter is present in column of table and is not deleted
@@ -1717,12 +1188,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function existsNotDeleted(string $table, string $column = null, string $deletedAtColumn = "deleted_at", string $message = null): static
-    {
-        if (is_null($column)) $column = $this->keyName;
-
-        return $this->addRuleObjectAndMessage("exists", Rule::exists($table, $column)->whereNull($deletedAtColumn), $message);
-    }
+    public function existsNotDeleted(string $table, string $column = null, string $deletedAtColumn = "deleted_at", string $message = null): static;
 
     /**
      * validate parameter is not present in column of table
@@ -1733,12 +1199,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function unique(string $table, string $column = null, string $message = null): static
-    {
-        if (is_null($column)) $column = $this->keyName;
-
-        return $this->addRuleObjectAndMessage("unique", Rule::unique($table, $column), $message);
-    }
+    public function unique(string $table, string $column = null, string $message = null): static;
 
     /**
      * validate parameter is not present in column of table in which deleted_at column is null
@@ -1750,12 +1211,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function uniqueNotDeleted(string $table, string $column = null, string $deletedAtColumn = "deleted_at", string $message = null): static
-    {
-        if (is_null($column)) $column = $this->keyName;
-
-        return $this->addRuleObjectAndMessage("unique", Rule::unique($table, $column)->whereNull($deletedAtColumn), $message);
-    }
+    public function uniqueNotDeleted(string $table, string $column = null, string $deletedAtColumn = "deleted_at", string $message = null): static;
 
     /**
      * validate parameter is present in id column of table
@@ -1764,10 +1220,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function id(string $table, string $message = null): static
-    {
-        return $this->exists($table, "id", $message);
-    }
+    public function id(string $table, string $message = null): static;
 
     /*----------------------------------------*
      * Rule Values
@@ -1780,10 +1233,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function in(Arrayable|array|string $values, string $message = null): static
-    {
-        return $this->addRuleObjectAndMessage("in", Rule::in($values), $message);
-    }
+    public function in(Arrayable|array|string $values, string $message = null): static;
 
     /**
      * validate parameter is not in values
@@ -1792,10 +1242,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function notIn(Arrayable|array|string $values, string $message = null): static
-    {
-        return $this->addRuleObjectAndMessage("not_in", Rule::notIn($values), $message);
-    }
+    public function notIn(Arrayable|array|string $values, string $message = null): static;
 
     /**
      * validate parameter starts with one of values
@@ -1804,10 +1251,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function startsWith(array|string $values, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("starts_with", $values, $message);
-    }
+    public function startsWith(array|string $values, string $message = null): static;
 
     /**
      * validate parameter does not start with any of values
@@ -1816,10 +1260,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function doesntStartWith(array|string $values, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("doesnt_start_with", $values, $message);
-    }
+    public function doesntStartWith(array|string $values, string $message = null): static;
 
     /**
      * validate parameter ends with one of values
@@ -1828,10 +1269,7 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function endsWith(array|string $values, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("ends_with", $values, $message);
-    }
+    public function endsWith(array|string $values, string $message = null): static;
 
     /**
      * validate parameter does not end with any of values
@@ -1840,8 +1278,5 @@ class Input implements InputInterface
      * @param string|null $message
      * @return static
      */
-    public function doesntEndWith(array|string $values, string $message = null): static
-    {
-        return $this->addRuleValuesAndMessage("doesnt_end_with", $values, $message);
-    }
+    public function doesntEndWith(array|string $values, string $message = null): static;
 }
