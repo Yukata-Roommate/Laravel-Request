@@ -21,7 +21,16 @@ abstract class Entity extends ArrayEntity
     public function __construct(array $validated)
     {
         $this->set($validated);
+
+        $this->bind();
     }
+
+    /**
+     * bind property
+     * 
+     * @return void
+     */
+    public function bind(): void {}
 
     /*----------------------------------------*
      * Property
