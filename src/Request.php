@@ -31,7 +31,10 @@ abstract class Request extends BaseRequest
      * 
      * @return array<\YukataRm\Laravel\Request\Interface\ValidationInterface>
      */
-    abstract protected function validations(): array;
+    protected function validations(): array
+    {
+        return [];
+    }
 
     /**
      * set Validation array
