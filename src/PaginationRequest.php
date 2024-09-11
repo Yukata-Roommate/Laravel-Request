@@ -35,11 +35,23 @@ abstract class PaginationRequest extends Request
      *----------------------------------------*/
 
     /**
-     * page item limit
-     *
+     * page
+     * 
      * @var int
      */
-    protected int $pageItemLimit = 10;
+    protected int $page;
+
+    /**
+     * passed validate resolved
+     * 
+     * @return void 
+     */
+    protected function passedValidateResolved(): void
+    {
+        $validated = $this->validated();
+
+        $this->page = isset($validated["page"]) ? $validated["page"] : 1;
+    }
 
     /**
      * get page item limit
@@ -48,7 +60,7 @@ abstract class PaginationRequest extends Request
      */
     protected function pageItemLimit(): int
     {
-        return $this->pageItemLimit;
+        return property_exists($this, "pageItemLimit") ? $this->pageItemLimit : 10;
     }
 
     /**
@@ -58,7 +70,7 @@ abstract class PaginationRequest extends Request
      */
     public function page(): int
     {
-        return $this->entity()->nullableInt("page") ?? 1;
+        return $this->page;
     }
 
     /**

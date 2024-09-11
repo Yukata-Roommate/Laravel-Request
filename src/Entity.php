@@ -22,15 +22,33 @@ abstract class Entity extends ArrayEntity
     {
         $this->setData($validated);
 
+        $this->prepare();
+
         $this->bind();
+
+        $this->passed();
     }
 
     /**
-     * bind property
+     * prepare bind Model properties
      * 
      * @return void
      */
-    public function bind(): void {}
+    protected function prepare(): void {}
+
+    /**
+     * bind Model properties
+     * 
+     * @return void
+     */
+    abstract protected function bind(): void;
+
+    /**
+     * passed bind Model properties
+     * 
+     * @return void
+     */
+    protected function passed(): void {}
 
     /*----------------------------------------*
      * Property

@@ -240,7 +240,7 @@ abstract class Request extends BaseRequest
      * 
      * @var string
      */
-    protected string $entity = Entity::class;
+    protected string $entity;
 
     /**
      * get Entity
@@ -249,6 +249,8 @@ abstract class Request extends BaseRequest
      */
     public function entity(): Entity
     {
+        if (!isset($this->entity)) throw new \RuntimeException("entity class is not set");
+
         $entityClass = $this->entity;
 
         return new $entityClass($this->validated());
