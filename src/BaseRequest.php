@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Route;
 
-use YukataRm\Laravel\Request\Entity;
+use YukataRm\Laravel\Request\Entity\BaseEntity;
 
 /**
  * Base Request extends FormRequest for Laravel
@@ -321,7 +321,11 @@ abstract class BaseRequest extends FormRequest
         if (empty($this->additionalData)) return $additionalData;
 
         foreach ($this->additionalData as $name) {
-            $additionalData[$name] = Route::input($name);
+            $input = Route::input($name);
+
+            if (is_null($input)) continue;
+
+            $additionalData[$name] = $input;
         }
 
         return $additionalData;
@@ -341,9 +345,9 @@ abstract class BaseRequest extends FormRequest
     /**
      * get Entity
      * 
-     * @return \YukataRm\Laravel\Request\Entity
+     * @return \YukataRm\Laravel\Request\Entity\BaseEntity
      */
-    public function entity(): Entity
+    public function entity(): BaseEntity
     {
         if (!isset($this->entity)) throw new \RuntimeException("entity class is not set");
 

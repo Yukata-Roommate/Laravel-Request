@@ -28,9 +28,30 @@ abstract class PaginationRequest extends BaseRequest
     #[\Override]
     protected function setValidations(): void
     {
-        $this->validations = array_merge($this->validations(), [
-            Validation::filled("page")->integer(),
-        ]);
+        parent::setValidations();
+
+        $this->validations = array_merge(
+            $this->validations,
+            [
+                Validation::filled("page")->integer(),
+            ]
+        );
+    }
+
+    /**
+     * get additional data for validation
+     * 
+     * @return array<string, mixed>
+     */
+    #[\Override]
+    protected function additionalData(): array
+    {
+        $this->additionalData = array_merge(
+            $this->additionalData,
+            ["page"]
+        );
+
+        return parent::additionalData();
     }
 
     /**

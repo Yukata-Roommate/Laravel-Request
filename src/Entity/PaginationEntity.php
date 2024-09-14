@@ -26,6 +26,8 @@ abstract class PaginationEntity extends BaseEntity
     #[\Override]
     protected function prepare(): void
     {
+        parent::prepare();
+
         $this->page          = $this->int("page");
         $this->pageItemLimit = $this->int("pageItemLimit");
         $this->startPosition = $this->int("startPosition");
