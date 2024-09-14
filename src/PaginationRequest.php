@@ -2,7 +2,8 @@
 
 namespace YukataRm\Laravel\Request;
 
-use YukataRm\Laravel\Request\Request;
+use YukataRm\Laravel\Request\BaseRequest;
+use YukataRm\Laravel\Request\Trait\Pagination;
 
 use YukataRm\Laravel\Request\Facade\Validation;
 
@@ -11,8 +12,10 @@ use YukataRm\Laravel\Request\Facade\Validation;
  * 
  * @package YukataRm\Laravel\Request
  */
-abstract class PaginationRequest extends Request
+abstract class PaginationRequest extends BaseRequest
 {
+    use Pagination;
+
     /*----------------------------------------*
      * Override
      *----------------------------------------*/
@@ -30,16 +33,24 @@ abstract class PaginationRequest extends Request
         ]);
     }
 
+    /**
+     * get entity data
+     * 
+     * @return array<string, mixed>
+     */
+    #[\Override]
+    protected function entityData(): array
+    {
+        return array_merge(parent::entityData(), [
+            "page"          => $this->page(),
+            "pageItemLimit" => $this->pageItemLimit(),
+            "startPosition" => $this->startPosition(),
+        ]);
+    }
+
     /*----------------------------------------*
      * Pagination
      *----------------------------------------*/
-
-    /**
-     * page
-     * 
-     * @var int
-     */
-    protected int $page;
 
     /**
      * passed validate resolved
@@ -51,56 +62,5 @@ abstract class PaginationRequest extends Request
         $validated = $this->validated();
 
         $this->page = isset($validated["page"]) ? $validated["page"] : 1;
-    }
-
-    /**
-     * get page item limit
-     * 
-     * @return int
-     */
-    protected function pageItemLimit(): int
-    {
-        return property_exists($this, "pageItemLimit") ? $this->pageItemLimit : 10;
-    }
-
-    /**
-     * get page
-     * 
-     * @return int
-     */
-    public function page(): int
-    {
-        return $this->page;
-    }
-
-    /**
-     * get offset
-     * 
-     * @return int
-     */
-    public function offset(): int
-    {
-        return ($this->page() - 1) * $this->pageItemLimit();
-    }
-
-    /**
-     * get start position
-     * 
-     * @return int
-     */
-    public function start(int $default = 0): int
-    {
-        return $this->offset() + $default;
-    }
-
-    /**
-     * get end position
-     * 
-     * @param int $default
-     * @return int
-     */
-    public function end(int $default = 0): int
-    {
-        return $this->start($default) + $this->pageItemLimit() - 1;
     }
 }

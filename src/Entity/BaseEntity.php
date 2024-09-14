@@ -1,6 +1,6 @@
 <?php
 
-namespace YukataRm\Laravel\Request;
+namespace YukataRm\Laravel\Request\Entity;
 
 use YukataRm\Entity\ArrayEntity;
 
@@ -9,18 +9,18 @@ use Illuminate\Http\UploadedFile;
 /**
  * Base Entity
  * 
- * @package YukataRm\Laravel\Request
+ * @package YukataRm\Laravel\Request\Entity
  */
-abstract class Entity extends ArrayEntity
+abstract class BaseEntity extends ArrayEntity
 {
     /**
      * constructor
      * 
-     * @param array $validated
+     * @param array $data
      */
-    public function __construct(array $validated)
+    public function __construct(array $data)
     {
-        $this->setData($validated);
+        $this->setData($data);
 
         $this->prepare();
 
@@ -30,21 +30,21 @@ abstract class Entity extends ArrayEntity
     }
 
     /**
-     * prepare bind Model properties
+     * prepare bind properties
      * 
      * @return void
      */
     protected function prepare(): void {}
 
     /**
-     * bind Model properties
+     * bind properties
      * 
      * @return void
      */
     abstract protected function bind(): void;
 
     /**
-     * passed bind Model properties
+     * passed bind properties
      * 
      * @return void
      */
