@@ -23,6 +23,7 @@ abstract class BaseRequest extends FormRequest
     /**
      * validate resolved
      * 
+     * @see \Illuminate\Foundation\Http\FormRequest
      * @see \Illuminate\Validation\ValidatesWhenResolvedTrait
      * 
      * @return void
@@ -32,24 +33,24 @@ abstract class BaseRequest extends FormRequest
     {
         $this->setValidations();
 
-        if (method_exists($this, 'prepareForValidateResolved')) $this->prepareForValidateResolved();
+        if (method_exists($this, "prepareForValidateResolved")) $this->prepareForValidateResolved();
 
         parent::validateResolved();
 
-        if (method_exists($this, 'passedValidateResolved')) $this->passedValidateResolved();
+        if (method_exists($this, "passedValidateResolved")) $this->passedValidateResolved();
     }
 
     /**
-     * Validation array
+     * Validation Rules array
      * 
-     * @var array<\YukataRm\Laravel\Request\Interface\ValidationInterface>
+     * @var array<\YukataRm\Laravel\Validation\Interface\ValidationRulesInterface>
      */
     protected array $validations = [];
 
     /**
-     * get Validation array
+     * get Validation Rules array
      * 
-     * @return array<\YukataRm\Laravel\Request\Interface\ValidationInterface>
+     * @return array<\YukataRm\Laravel\Validation\Interface\ValidationRulesInterface>
      */
     protected function validations(): array
     {
@@ -57,7 +58,7 @@ abstract class BaseRequest extends FormRequest
     }
 
     /**
-     * set Validation array
+     * set Validation Rules array
      * 
      * @return void
      */
@@ -208,12 +209,14 @@ abstract class BaseRequest extends FormRequest
     {
         $rules = [];
 
+        if (empty($this->validations)) return $rules;
+
         foreach ($this->validations as $validation) {
-            $validationRules = $validation->getRules();
+            $validationRules = $validation->rules();
 
             if (empty($validationRules)) continue;
 
-            $rules = array_merge($rules, [$validation->getKeyName() => $validationRules]);
+            $rules = array_merge($rules, [$validation->key() => $validationRules]);
         }
 
         return $rules;
@@ -241,8 +244,10 @@ abstract class BaseRequest extends FormRequest
     {
         $messages = [];
 
+        if (empty($this->validations)) return $messages;
+
         foreach ($this->validations as $validation) {
-            $validationMessages = $validation->getMessages();
+            $validationMessages = $validation->messages();
 
             if (empty($validationMessages)) continue;
 
@@ -274,12 +279,14 @@ abstract class BaseRequest extends FormRequest
     {
         $attributes = [];
 
+        if (empty($this->validations)) return $attributes;
+
         foreach ($this->validations as $validation) {
-            $attributeName = $validation->getAttributeName();
+            $attributeName = $validation->attribute();
 
             if (empty($attributeName)) continue;
 
-            $attributes = array_merge($attributes, [$validation->getKeyName() => $attributeName]);
+            $attributes = array_merge($attributes, [$validation->key() => $attributeName]);
         }
 
         return $attributes;
@@ -290,16 +297,23 @@ abstract class BaseRequest extends FormRequest
      *----------------------------------------*/
 
     /**
-     * get validated data
+     * Retrieve an input item from the request.
      *
-     * @see \Illuminate\Foundation\Http\FormRequest
+     * @see \Illuminate\Http\Request
+     * @see \Illuminate\Http\Concerns\InteractsWithInput
      * 
-     * @return array
+     * @param string|null $key
+     * @param mixed $default
+     * @return mixed
      */
     #[\Override]
-    public function validationData(): array
+    public function input($key = null, $default = null)
     {
-        return array_merge(parent::validationData(), $this->additionalData());
+        return data_get(
+            parent::input() + $this->additionalData(),
+            $key,
+            $default
+        );
     }
 
     /**

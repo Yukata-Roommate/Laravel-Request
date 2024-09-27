@@ -5,7 +5,7 @@ namespace YukataRm\Laravel\Request;
 use YukataRm\Laravel\Request\BaseRequest;
 use YukataRm\Laravel\Request\Trait\Pagination;
 
-use YukataRm\Laravel\Request\Facade\Validation;
+use YukataRm\Laravel\Validation\Facade\ValidationRules;
 
 /**
  * Pagination Request for Laravel
@@ -33,7 +33,7 @@ abstract class PaginationRequest extends BaseRequest
         $this->validations = array_merge(
             $this->validations,
             [
-                Validation::filled("page")->integer(),
+                ValidationRules::filled("page")->integer(),
             ]
         );
     }
