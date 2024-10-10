@@ -55,12 +55,12 @@ abstract class BaseEntity extends ArrayEntity
      *----------------------------------------*/
 
     /**
-     * get property as UploadedFile or null
+     * get property as nullable UploadedFile
      * 
      * @param string $name
      * @return \Illuminate\Http\UploadedFile|null
      */
-    public function file(string $name): UploadedFile|null
+    public function nullableFile(string $name): UploadedFile|null
     {
         $property = $this->get($name);
 
@@ -68,12 +68,27 @@ abstract class BaseEntity extends ArrayEntity
     }
 
     /**
-     * get property as UploadedFile array or null
+     * get property as UploadedFile
+     * 
+     * @param string $name
+     * @return \Illuminate\Http\UploadedFile
+     */
+    public function file(string $name): UploadedFile
+    {
+        $property = $this->nullableFile($name);
+
+        if (is_null($property)) $this->throwRequiredException($name);
+
+        return $property;
+    }
+
+    /**
+     * get property as nullable UploadedFile array
      * 
      * @param string $name
      * @return array<string, \Illuminate\Http\UploadedFile>|null
      */
-    public function files(string $name): array|null
+    public function nullableFiles(string $name): array|null
     {
         $property = $this->get($name);
 
@@ -88,5 +103,20 @@ abstract class BaseEntity extends ArrayEntity
         }
 
         return count($files) > 0 ? $files : null;
+    }
+
+    /**
+     * get property as UploadedFile array
+     * 
+     * @param string $name
+     * @return array<string, \Illuminate\Http\UploadedFile>
+     */
+    public function files(string $name): array
+    {
+        $property = $this->nullableFiles($name);
+
+        if (is_null($property)) $this->throwRequiredException($name);
+
+        return $property;
     }
 }
