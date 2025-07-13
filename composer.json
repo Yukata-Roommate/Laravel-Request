@@ -1,0 +1,30 @@
+{
+    "name": "yukata-roommate/laravel-request",
+    "description": "Easy to use form request for Laravel",
+    "version": "1.0.0",
+    "keywords": [
+        "yukata-roommate",
+        "php",
+        "laravel",
+        "package",
+        "request",
+        "laravel-request"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yukata Roommate"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "YukataRm\\Laravel\\Request\\": "src"
+        }
+    },
+    "require": {
+        "php": ">=8.3.0",
+        "laravel/framework": "^11.0 || ^12.0",
+        "yukata-roommate/entity": "^1.0.0",
+        "yukata-roommate/laravel-validation": "^1.0.0"
+    }
+}

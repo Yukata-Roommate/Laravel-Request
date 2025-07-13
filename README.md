@@ -1,0 +1,11 @@
+# Laravel Request
+
+Easy to use form request for Laravel
+
+## Installation
+
+You can install package via composer:
+
+```
+composer require yukata-roommate/laravel-request
+```
